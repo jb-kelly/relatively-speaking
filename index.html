@@ -603,41 +603,42 @@ function renderMedals(bigger, smaller) {
 
   const bm = bigger.medals, sm = smaller.medals;
   const maxVal = Math.max(bm.g, bm.s, bm.b, sm.g, sm.s, sm.b, 1);
-  const BAR_H = 80;
+  const BAR_H = 64;
 
-  function barH(v) { return Math.max(2, Math.round(v / maxVal * BAR_H)); }
+  function barH(v) { return Math.max(3, Math.round(v / maxVal * BAR_H)); }
 
   function medalBlock(country, m) {
     const total = m.g + m.s + m.b;
+    const colors = ['#C9A84C','#A0A9B8','#A0694A'];
+    const emojis = ['🥇','🥈','🥉'];
+    const vals = [m.g, m.s, m.b];
     return `
-      <div class="medals-row">
-        <div class="medals-country-header">
-          <span style="font-size:1.4rem">${country.flag}</span>
-          <span style="font-weight:500;color:var(--text);font-size:1.05rem">${country.name}</span>
-          <div class="medals-total-big">
-            ${total}
-            <span>total medals</span>
+      <div style="margin-bottom:0.8rem">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem">
+          <div style="display:flex;align-items:center;gap:0.5rem">
+            <span style="font-size:1.3rem">${country.flag}</span>
+            <span style="font-weight:500;color:var(--text);font-size:1rem">${country.name}</span>
+          </div>
+          <div style="text-align:right">
+            <span style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:500;color:var(--text);line-height:1">${total}</span>
+            <span style="display:block;font-family:'Lato',sans-serif;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-faint)">total medals</span>
           </div>
         </div>
-        <div style="display:flex;gap:8px;align-items:flex-end;height:${BAR_H + 28}px">
-          ${['gold','silver','bronze'].map((type,i) => {
-            const v = [m.g, m.s, m.b][i];
-            const emoji = ['🥇','🥈','🥉'][i];
-            const h = barH(v);
-            return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-              <span style="font-family:'Lato',sans-serif;font-size:0.85rem;font-weight:400;color:var(--text-muted)">${v}</span>
-              <div style="width:100%;height:${h}px;border-radius:3px 3px 0 0;background:${['#C9A84C','#A0A9B8','#A0694A'][i]}"></div>
-              <span style="font-size:1.1rem">${emoji}</span>
-            </div>`;
-          }).join('')}
+        <div style="display:flex;gap:6px;align-items:flex-end">
+          ${vals.map((v, i) => `
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+              <span style="font-family:'Lato',sans-serif;font-size:0.78rem;color:var(--text-muted)">${v}</span>
+              <div style="width:100%;height:${barH(v)}px;border-radius:3px 3px 0 0;background:${colors[i]}"></div>
+              <span style="font-size:0.95rem;line-height:1;margin-top:2px">${emojis[i]}</span>
+            </div>`).join('')}
         </div>
       </div>`;
   }
 
   container.innerHTML = `
-    <div class="medals-viz">
+    <div style="width:100%;max-width:420px;margin:0 auto">
       ${medalBlock(bigger, bm)}
-      <hr class="medals-divider">
+      <hr style="border:none;border-top:1px solid var(--border);margin:0.6rem 0">
       ${medalBlock(smaller, sm)}
     </div>`;
 
