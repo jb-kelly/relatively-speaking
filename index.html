@@ -177,7 +177,8 @@
   .pop-person { width: 28px; height: 36px; flex-shrink: 0; }
   .pop-val { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); }
 
-  .mode-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 2rem 0 2.5rem; }
+  .home-btn { background: none; border: none; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--text-faint); cursor: pointer; transition: color 0.2s ease; letter-spacing: 0.02em; padding: 0.5rem; }
+  .home-btn:hover { color: var(--teal); }
   @media (min-width: 520px) { .mode-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 480px) { .choices { grid-template-columns: 1fr; } }
 </style>
@@ -342,6 +343,9 @@
         <button class="next-btn" id="next-btn" onclick="nextRound()">Continue →</button>
       </div>
     </div>
+    <div style="text-align:center;margin-top:1.5rem">
+      <button class="home-btn" onclick="goToMode()">← Change category</button>
+    </div>
   </div>
 
   <!-- END -->
@@ -353,6 +357,7 @@
     <div class="end-grade" id="end-grade"></div>
     <div class="ornament">· · ·</div>
     <button class="replay-btn" onclick="startGame()">Play Again</button>
+    <button class="replay-btn" onclick="goToMode()">← Change category</button>
   </div>
 </div>
 
