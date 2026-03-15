@@ -42,6 +42,7 @@
 
   /* DIFFICULTY */
   #difficulty-screen { text-align: center; }
+  .game-intro { font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--ink-muted); line-height: 1.8; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
   .screen-label { font-style: italic; font-size: 1.2rem; color: var(--ink-muted); margin-bottom: 2rem; font-weight: 300; }
   .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
   .diff-btn { background: white; border: 1px solid var(--ink-faint); border-radius: 4px; padding: 1.5rem 0.75rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.2s ease; text-align: center; }
@@ -201,6 +202,7 @@
 
   <!-- DIFFICULTY -->
   <div id="difficulty-screen">
+    <p class="game-intro">Two countries. One question: which is bigger?<br>Pick the larger country by square miles — but watch out, the comparisons get trickier as you go. Three wrong guesses and it's game over.</p>
     <p class="screen-label">Choose your starting difficulty</p>
     <div class="diff-grid">
       <button class="diff-btn easy selected" onclick="selectDiff('easy',this)">
