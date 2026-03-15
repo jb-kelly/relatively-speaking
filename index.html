@@ -184,7 +184,9 @@
     transition: all 0.2s ease; text-align: center;
   }
   .mode-btn:hover { background: #faf8f4; border-color: var(--raw-sienna); }
-  .mode-btn.selected { border: 2px solid var(--raw-sienna); }
+  .mode-btn.selected { border: 2px solid var(--raw-sienna) !important; background: rgba(200,115,42,0.07); }
+  .mode-btn.selected .mode-name { color: var(--raw-sienna); }
+  .mode-btn.selected .mode-icon { filter: saturate(1.2); }
   .mode-icon { font-size: 2.4rem; display: block; margin-bottom: 0.75rem; }
   .mode-name { font-size: 1.3rem; font-weight: 500; display: block; margin-bottom: 0.3rem; color: var(--ink); }
   .mode-desc { font-size: 0.9rem; color: var(--ink-muted); font-style: italic; line-height: 1.5; display: block; }
@@ -440,112 +442,6 @@ const COUNTRIES = [
   { name:"Luxembourg",               geoName:"Luxembourg",               flag:"🇱🇺", area:999,     pop:660000,     gdp:86,    medals:{g:1,s:1,b:0} },
   { name:"Singapore",                geoName:"Singapore",                flag:"🇸🇬", area:281,     pop:5900000,    gdp:501,   medals:{g:0,s:2,b:2} }
 ];
-  { name:"United States",            geoName:"United States of America", flag:"🇺🇸", area:3796742, pop:335000000 },
-  { name:"China",                    geoName:"China",                    flag:"🇨🇳", area:3705407, pop:1410000000},
-  { name:"Brazil",                   geoName:"Brazil",                   flag:"🇧🇷", area:3287956, pop:215300000 },
-  { name:"Australia",                geoName:"Australia",                flag:"🇦🇺", area:2969907, pop:26500000  },
-  { name:"India",                    geoName:"India",                    flag:"🇮🇳", area:1269219, pop:1428600000},
-  { name:"Argentina",                geoName:"Argentina",                flag:"🇦🇷", area:1073520, pop:46600000  },
-  { name:"Kazakhstan",               geoName:"Kazakhstan",               flag:"🇰🇿", area:1052090, pop:19600000  },
-  { name:"Algeria",                  geoName:"Algeria",                  flag:"🇩🇿", area:919595,  pop:45600000  },
-  { name:"DR Congo",                 geoName:"Dem. Rep. Congo",          flag:"🇨🇩", area:905354,  pop:102200000 },
-  { name:"Saudi Arabia",             geoName:"Saudi Arabia",             flag:"🇸🇦", area:830000,  pop:36900000  },
-  { name:"Mexico",                   geoName:"Mexico",                   flag:"🇲🇽", area:758449,  pop:128500000 },
-  { name:"Indonesia",                geoName:"Indonesia",                flag:"🇮🇩", area:735358,  pop:277500000 },
-  { name:"Sudan",                    geoName:"Sudan",                    flag:"🇸🇩", area:728215,  pop:46900000  },
-  { name:"Libya",                    geoName:"Libya",                    flag:"🇱🇾", area:679362,  pop:7200000   },
-  { name:"Iran",                     geoName:"Iran",                     flag:"🇮🇷", area:636372,  pop:87900000  },
-  { name:"Mongolia",                 geoName:"Mongolia",                 flag:"🇲🇳", area:604829,  pop:3400000   },
-  { name:"Peru",                     geoName:"Peru",                     flag:"🇵🇪", area:496225,  pop:33700000  },
-  { name:"Chad",                     geoName:"Chad",                     flag:"🇹🇩", area:495755,  pop:18300000  },
-  { name:"Niger",                    geoName:"Niger",                    flag:"🇳🇪", area:489191,  pop:26200000  },
-  { name:"Angola",                   geoName:"Angola",                   flag:"🇦🇴", area:481354,  pop:36700000  },
-  { name:"Mali",                     geoName:"Mali",                     flag:"🇲🇱", area:478841,  pop:23300000  },
-  { name:"South Africa",             geoName:"South Africa",             flag:"🇿🇦", area:471011,  pop:60400000  },
-  { name:"Colombia",                 geoName:"Colombia",                 flag:"🇨🇴", area:440831,  pop:52200000  },
-  { name:"Ethiopia",                 geoName:"Ethiopia",                 flag:"🇪🇹", area:426373,  pop:126500000 },
-  { name:"Bolivia",                  geoName:"Bolivia",                  flag:"🇧🇴", area:424164,  pop:12100000  },
-  { name:"Mauritania",               geoName:"Mauritania",               flag:"🇲🇷", area:397955,  pop:4700000   },
-  { name:"Egypt",                    geoName:"Egypt",                    flag:"🇪🇬", area:386662,  pop:105000000 },
-  { name:"Tanzania",                 geoName:"Tanzania",                 flag:"🇹🇿", area:364900,  pop:65500000  },
-  { name:"Nigeria",                  geoName:"Nigeria",                  flag:"🇳🇬", area:356669,  pop:223800000 },
-  { name:"Venezuela",                geoName:"Venezuela",                flag:"🇻🇪", area:353841,  pop:28800000  },
-  { name:"Mozambique",               geoName:"Mozambique",               flag:"🇲🇿", area:309496,  pop:33100000  },
-  { name:"Pakistan",                 geoName:"Pakistan",                 flag:"🇵🇰", area:340509,  pop:231400000 },
-  { name:"Turkey",                   geoName:"Turkey",                   flag:"🇹🇷", area:302535,  pop:85300000  },
-  { name:"Chile",                    geoName:"Chile",                    flag:"🇨🇱", area:291930,  pop:19600000  },
-  { name:"France",                   geoName:"France",                   flag:"🇫🇷", area:248573,  pop:68400000  },
-  { name:"Somalia",                  geoName:"Somalia",                  flag:"🇸🇴", area:246201,  pop:18100000  },
-  { name:"Central African Republic", geoName:"Central African Rep.",     flag:"🇨🇫", area:240535,  pop:5600000   },
-  { name:"Ukraine",                  geoName:"Ukraine",                  flag:"🇺🇦", area:233062,  pop:43500000  },
-  { name:"Madagascar",               geoName:"Madagascar",               flag:"🇲🇬", area:226658,  pop:29600000  },
-  { name:"Botswana",                 geoName:"Botswana",                 flag:"🇧🇼", area:224607,  pop:2600000   },
-  { name:"Kenya",                    geoName:"Kenya",                    flag:"🇰🇪", area:224081,  pop:55100000  },
-  { name:"Yemen",                    geoName:"Yemen",                    flag:"🇾🇪", area:203850,  pop:34400000  },
-  { name:"Thailand",                 geoName:"Thailand",                 flag:"🇹🇭", area:198117,  pop:71800000  },
-  { name:"Spain",                    geoName:"Spain",                    flag:"🇪🇸", area:195360,  pop:47800000  },
-  { name:"Cameroon",                 geoName:"Cameroon",                 flag:"🇨🇲", area:183568,  pop:28700000  },
-  { name:"Papua New Guinea",         geoName:"Papua New Guinea",         flag:"🇵🇬", area:178704,  pop:10300000  },
-  { name:"Sweden",                   geoName:"Sweden",                   flag:"🇸🇪", area:173860,  pop:10500000  },
-  { name:"Uzbekistan",               geoName:"Uzbekistan",               flag:"🇺🇿", area:172742,  pop:36500000  },
-  { name:"Morocco",                  geoName:"Morocco",                  flag:"🇲🇦", area:172414,  pop:37800000  },
-  { name:"Iraq",                     geoName:"Iraq",                     flag:"🇮🇶", area:169235,  pop:42300000  },
-  { name:"Paraguay",                 geoName:"Paraguay",                 flag:"🇵🇾", area:157048,  pop:7400000   },
-  { name:"Zimbabwe",                 geoName:"Zimbabwe",                 flag:"🇿🇼", area:150872,  pop:16300000  },
-  { name:"Japan",                    geoName:"Japan",                    flag:"🇯🇵", area:145937,  pop:124500000 },
-  { name:"Germany",                  geoName:"Germany",                  flag:"🇩🇪", area:137988,  pop:84400000  },
-  { name:"Finland",                  geoName:"Finland",                  flag:"🇫🇮", area:130559,  pop:5600000   },
-  { name:"Vietnam",                  geoName:"Vietnam",                  flag:"🇻🇳", area:127882,  pop:98900000  },
-  { name:"Malaysia",                 geoName:"Malaysia",                 flag:"🇲🇾", area:127320,  pop:33600000  },
-  { name:"Norway",                   geoName:"Norway",                   flag:"🇳🇴", area:125021,  pop:5500000   },
-  { name:"Poland",                   geoName:"Poland",                   flag:"🇵🇱", area:120728,  pop:37700000  },
-  { name:"Ivory Coast",              geoName:"Côte d'Ivoire",            flag:"🇨🇮", area:124504,  pop:27500000  },
-  { name:"Oman",                     geoName:"Oman",                     flag:"🇴🇲", area:119499,  pop:4800000   },
-  { name:"Italy",                    geoName:"Italy",                    flag:"🇮🇹", area:116348,  pop:58800000  },
-  { name:"Philippines",              geoName:"Philippines",              flag:"🇵🇭", area:115831,  pop:115600000 },
-  { name:"Ecuador",                  geoName:"Ecuador",                  flag:"🇪🇨", area:109484,  pop:18000000  },
-  { name:"Burkina Faso",             geoName:"Burkina Faso",             flag:"🇧🇫", area:105869,  pop:22700000  },
-  { name:"New Zealand",              geoName:"New Zealand",              flag:"🇳🇿", area:103736,  pop:5100000   },
-  { name:"Gabon",                    geoName:"Gabon",                    flag:"🇬🇦", area:103347,  pop:2400000   },
-  { name:"United Kingdom",           geoName:"United Kingdom",           flag:"🇬🇧", area:94058,   pop:67700000  },
-  { name:"Uganda",                   geoName:"Uganda",                   flag:"🇺🇬", area:93065,   pop:48600000  },
-  { name:"Ghana",                    geoName:"Ghana",                    flag:"🇬🇭", area:92098,   pop:33500000  },
-  { name:"Romania",                  geoName:"Romania",                  flag:"🇷🇴", area:91699,   pop:19000000  },
-  { name:"Laos",                     geoName:"Laos",                     flag:"🇱🇦", area:91429,   pop:7500000   },
-  { name:"Guinea",                   geoName:"Guinea",                   flag:"🇬🇳", area:94926,   pop:13500000  },
-  { name:"Belarus",                  geoName:"Belarus",                  flag:"🇧🇾", area:80155,   pop:9400000   },
-  { name:"Cuba",                     geoName:"Cuba",                     flag:"🇨🇺", area:42804,   pop:11200000  },
-  { name:"South Korea",              geoName:"South Korea",              flag:"🇰🇷", area:38622,   pop:51700000  },
-  { name:"Iceland",                  geoName:"Iceland",                  flag:"🇮🇸", area:39769,   pop:376000    },
-  { name:"Hungary",                  geoName:"Hungary",                  flag:"🇭🇺", area:35919,   pop:9700000   },
-  { name:"Portugal",                 geoName:"Portugal",                 flag:"🇵🇹", area:35556,   pop:10300000  },
-  { name:"Jordan",                   geoName:"Jordan",                   flag:"🇯🇴", area:34495,   pop:10200000  },
-  { name:"Austria",                  geoName:"Austria",                  flag:"🇦🇹", area:32383,   pop:9100000   },
-  { name:"UAE",                      geoName:"United Arab Emirates",     flag:"🇦🇪", area:32278,   pop:9900000   },
-  { name:"Czech Republic",           geoName:"Czechia",                  flag:"🇨🇿", area:30450,   pop:10900000  },
-  { name:"Ireland",                  geoName:"Ireland",                  flag:"🇮🇪", area:27133,   pop:5100000   },
-  { name:"Georgia",                  geoName:"Georgia",                  flag:"🇬🇪", area:26911,   pop:3700000   },
-  { name:"Sri Lanka",                geoName:"Sri Lanka",                flag:"🇱🇰", area:25332,   pop:22200000  },
-  { name:"Lithuania",                geoName:"Lithuania",                flag:"🇱🇹", area:25212,   pop:2800000   },
-  { name:"Latvia",                   geoName:"Latvia",                   flag:"🇱🇻", area:24938,   pop:1800000   },
-  { name:"Croatia",                  geoName:"Croatia",                  flag:"🇭🇷", area:21851,   pop:3900000   },
-  { name:"Bosnia",                   geoName:"Bosnia and Herz.",         flag:"🇧🇦", area:19767,   pop:3200000   },
-  { name:"Estonia",                  geoName:"Estonia",                  flag:"🇪🇪", area:17462,   pop:1400000   },
-  { name:"Denmark",                  geoName:"Denmark",                  flag:"🇩🇰", area:16639,   pop:5900000   },
-  { name:"Netherlands",              geoName:"Netherlands",              flag:"🇳🇱", area:16040,   pop:17900000  },
-  { name:"Switzerland",              geoName:"Switzerland",              flag:"🇨🇭", area:15940,   pop:8800000   },
-  { name:"Taiwan",                   geoName:"Taiwan",                   flag:"🇹🇼", area:13974,   pop:23600000  },
-  { name:"Moldova",                  geoName:"Moldova",                  flag:"🇲🇩", area:13070,   pop:2600000   },
-  { name:"Belgium",                  geoName:"Belgium",                  flag:"🇧🇪", area:11787,   pop:11600000  },
-  { name:"Albania",                  geoName:"Albania",                  flag:"🇦🇱", area:11100,   pop:2800000   },
-  { name:"Israel",                   geoName:"Israel",                   flag:"🇮🇱", area:8019,    pop:9700000   },
-  { name:"Lebanon",                  geoName:"Lebanon",                  flag:"🇱🇧", area:4036,    pop:5500000   },
-  { name:"Qatar",                    geoName:"Qatar",                    flag:"🇶🇦", area:4473,    pop:2700000   },
-  { name:"Jamaica",                  geoName:"Jamaica",                  flag:"🇯🇲", area:4244,    pop:2800000   },
-  { name:"Cyprus",                   geoName:"Cyprus",                   flag:"🇨🇾", area:3572,    pop:1300000   },
-  { name:"Luxembourg",               geoName:"Luxembourg",               flag:"🇱🇺", area:999,     pop:660000    },
-  { name:"Singapore",                geoName:"Singapore",                flag:"🇸🇬", area:281,     pop:5900000   }
-];
 
 // ── Progressive difficulty ──
 const DIFF_START_MAX = { easy: 5.0, medium: 3.0, hard: 1.6 };
@@ -587,6 +483,12 @@ function formatValue(country) {
 }
 
 function goToDifficulty() {} // no-op, kept for safety
+
+function selectMode(m, el) {
+  gameMode = m;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
 
 function goToMode() {
   document.getElementById('difficulty-screen') && (document.getElementById('difficulty-screen').style.display = 'none');
