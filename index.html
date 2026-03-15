@@ -41,22 +41,7 @@
   .title-sub { font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-muted); margin-top: 0.6rem; }
 
   /* DIFFICULTY */
-  #difficulty-screen { text-align: center; }
   .game-intro { font-size: 1.15rem; font-weight: 300; font-style: italic; color: var(--ink-muted); line-height: 1.8; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .screen-label { font-style: italic; font-size: 1.2rem; color: var(--ink-muted); margin-bottom: 2rem; font-weight: 300; }
-  .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
-  .diff-btn { background: white; border: 1px solid var(--ink-faint); border-radius: 4px; padding: 1.5rem 0.75rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.2s ease; text-align: center; }
-  .diff-swatch { width: 32px; height: 32px; border-radius: 50%; margin: 0 auto 0.75rem; }
-  .diff-btn.easy .diff-swatch   { background: var(--antwerp-blue); }
-  .diff-btn.medium .diff-swatch { background: var(--raw-sienna); }
-  .diff-btn.hard .diff-swatch   { background: var(--slate-color); }
-  .diff-btn.selected { border-width: 2px; }
-  .diff-btn.easy.selected   { border-color: var(--antwerp-blue); }
-  .diff-btn.medium.selected { border-color: var(--raw-sienna); }
-  .diff-btn.hard.selected   { border-color: var(--slate-color); }
-  .diff-btn:hover:not(.selected) { background: #faf8f4; }
-  .diff-name { font-size: 1.1rem; font-weight: 500; display: block; margin-bottom: 0.25rem; }
-  .diff-desc { font-size: 0.85rem; color: var(--ink-muted); font-style: italic; line-height: 1.4; display: block; }
 
   /* HUD */
   .score-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 0 0.25rem; }
@@ -190,39 +175,92 @@
   .replay-btn { background: transparent; color: var(--raw-sienna); border: 1.5px solid var(--raw-sienna); border-radius: 4px; padding: 0.85rem 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; cursor: pointer; margin: 0 0.4rem; transition: all 0.18s ease; }
   .replay-btn:hover { background: rgba(200,115,42,0.08); }
 
-  @media (max-width: 480px) { .choices { grid-template-columns: 1fr; } .diff-grid { grid-template-columns: 1fr; } }
+  /* MODE SELECTOR */
+  #mode-screen { text-align: center; }
+  .mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 2rem 0 2.5rem; }
+  .mode-btn {
+    background: white; border: 1px solid var(--ink-faint); border-radius: 4px;
+    padding: 2rem 1.25rem; cursor: pointer; font-family: 'Cormorant Garamond', serif;
+    transition: all 0.2s ease; text-align: center;
+  }
+  .mode-btn:hover { background: #faf8f4; border-color: var(--raw-sienna); }
+  .mode-btn.selected { border: 2px solid var(--raw-sienna); }
+  .mode-icon { font-size: 2.4rem; display: block; margin-bottom: 0.75rem; }
+  .mode-name { font-size: 1.3rem; font-weight: 500; display: block; margin-bottom: 0.3rem; color: var(--ink); }
+  .mode-desc { font-size: 0.9rem; color: var(--ink-muted); font-style: italic; line-height: 1.5; display: block; }
+
+  /* GDP VIZ */
+  .gdp-viz { width: 100%; max-width: 420px; margin: 0 auto; }
+  .gdp-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem; }
+  .gdp-label { width: 110px; text-align: right; font-size: 0.9rem; font-style: italic; color: var(--ink-muted); flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gdp-bar-wrap { flex: 1; height: 28px; background: rgba(43,40,32,0.06); border-radius: 3px; overflow: hidden; }
+  .gdp-bar { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; padding-left: 8px; }
+  .gdp-bar.big  { background: rgba(26,122,138,0.7); }
+  .gdp-bar.small { background: rgba(200,115,42,0.65); }
+  .gdp-bar-val { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.06em; color: white; white-space: nowrap; }
+  .gdp-flag { font-size: 1.3rem; flex-shrink: 0; }
+
+  /* MEDALS VIZ */
+  .medals-viz { width: 100%; max-width: 420px; margin: 0 auto; }
+  .medals-row { margin-bottom: 1.2rem; }
+  .medals-country-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-style: italic; font-size: 1rem; color: var(--ink-muted); }
+  .medals-bars { display: flex; gap: 6px; height: 36px; }
+  .medal-bar-group { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
+  .medal-bar-fill { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.7s cubic-bezier(0.4,0,0.2,1); min-height: 2px; }
+  .medal-bar-fill.gold   { background: #C9A84C; }
+  .medal-bar-fill.silver { background: #A0A9B8; }
+  .medal-bar-fill.bronze { background: #A0694A; }
+  .medal-bar-label { font-family: 'Lato', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
+  .medals-total { font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-top: 4px; text-align: center; }
+  .medals-divider { border: none; border-top: 1px solid var(--ink-faint); margin: 0.5rem 0 1rem; }
+
+  /* POPULATION viz — simple proportional person-grid */
+  .pop-viz { width: 100%; max-width: 420px; margin: 0 auto; }
+  .pop-row { margin-bottom: 1rem; }
+  .pop-country-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; font-style: italic; font-size: 1rem; color: var(--ink-muted); }
+  .pop-bar-wrap { height: 22px; border-radius: 3px; overflow: hidden; background: rgba(43,40,32,0.06); }
+  .pop-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+  .pop-bar-fill.big   { background: rgba(26,122,138,0.65); }
+  .pop-bar-fill.small { background: rgba(200,115,42,0.6); }
+  .pop-bar-val { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-muted); margin-top: 3px; }
+
+  @media (max-width: 480px) { .choices { grid-template-columns: 1fr; } .diff-grid { grid-template-columns: 1fr; } .mode-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="page">
   <div class="title-block">
     <div class="title-script">Relatively Speaking</div>
-    <div class="title-sub">Size is everything. Or is it?</div>
+    <div class="title-sub">How well do you know the world?</div>
   </div>
 
-  <!-- DIFFICULTY -->
-  <div id="difficulty-screen">
-    <p class="game-intro">Two countries. One question: which is bigger?<br>Pick the larger country by square miles — but watch out, the comparisons get trickier as you go. Three wrong guesses and it's game over.</p>
-    <p class="screen-label">Choose your starting difficulty</p>
-    <div class="diff-grid">
-      <button class="diff-btn easy selected" onclick="selectDiff('easy',this)">
-        <div class="diff-swatch"></div>
-        <span class="diff-name">Easy</span>
-        <span class="diff-desc">Large contrasts to start — builds slowly</span>
+  <!-- MODE SELECTOR -->
+  <div id="mode-screen">
+    <p class="game-intro">Two countries. One question. Pick your category — the game starts easy and gets harder as you go. Three wrong guesses and it's over.</p>
+    <div class="mode-grid">
+      <button class="mode-btn selected" id="mode-btn-area" onclick="selectMode('area', this)">
+        <span class="mode-icon">🗺️</span>
+        <span class="mode-name">Land Area</span>
+        <span class="mode-desc">Which country covers more square miles?</span>
       </button>
-      <button class="diff-btn medium" onclick="selectDiff('medium',this)">
-        <div class="diff-swatch"></div>
-        <span class="diff-name">Medium</span>
-        <span class="diff-desc">Moderate differences — ramps from here</span>
+      <button class="mode-btn" id="mode-btn-pop" onclick="selectMode('population', this)">
+        <span class="mode-icon">👥</span>
+        <span class="mode-name">Population</span>
+        <span class="mode-desc">Which country has more people?</span>
       </button>
-      <button class="diff-btn hard" onclick="selectDiff('hard',this)">
-        <div class="diff-swatch"></div>
-        <span class="diff-name">Hard</span>
-        <span class="diff-desc">Close matches from the very start</span>
+      <button class="mode-btn" id="mode-btn-gdp" onclick="selectMode('gdp', this)">
+        <span class="mode-icon">💰</span>
+        <span class="mode-name">GDP</span>
+        <span class="mode-desc">Which economy is worth more in 2025?</span>
+      </button>
+      <button class="mode-btn" id="mode-btn-medals" onclick="selectMode('medals', this)">
+        <span class="mode-icon">🏅</span>
+        <span class="mode-name">Olympic Medals</span>
+        <span class="mode-desc">Which country has won more all-time?</span>
       </button>
     </div>
     <div class="ornament">· · ·</div>
-    <button class="start-btn" onclick="startGame()">Begin the Journey</button>
+    <button class="start-btn" onclick="startGame()">Alright hotshot, prove it.</button>
   </div>
 
   <!-- GAME -->
@@ -247,7 +285,7 @@
     </div>
 
     <div class="question-card">
-      <div class="question-text">Which country covers more square miles?</div>
+      <div class="question-text" id="question-text">Which country has more people?</div>
       <div class="choices">
         <button class="choice-btn" id="btn-a" onclick="answer(0)">
           <span class="choice-flag" id="flag-a">🌍</span>
@@ -291,114 +329,222 @@
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
 // ── Country list — geoName must match properties.name in world-atlas 50m ──
+// gdp = 2025 est. in billions USD
+// medals = { g: gold, s: silver, b: bronze } all-time Summer Olympics
 const COUNTRIES = [
-  { name:"Russia",                   geoName:"Russia",                   flag:"🇷🇺", area:6612100 },
-  { name:"Canada",                   geoName:"Canada",                   flag:"🇨🇦", area:3855100 },
-  { name:"United States",            geoName:"United States of America", flag:"🇺🇸", area:3796742 },
-  { name:"China",                    geoName:"China",                    flag:"🇨🇳", area:3705407 },
-  { name:"Brazil",                   geoName:"Brazil",                   flag:"🇧🇷", area:3287956 },
-  { name:"Australia",                geoName:"Australia",                flag:"🇦🇺", area:2969907 },
-  { name:"India",                    geoName:"India",                    flag:"🇮🇳", area:1269219 },
-  { name:"Argentina",                geoName:"Argentina",                flag:"🇦🇷", area:1073520 },
-  { name:"Kazakhstan",               geoName:"Kazakhstan",               flag:"🇰🇿", area:1052090 },
-  { name:"Algeria",                  geoName:"Algeria",                  flag:"🇩🇿", area:919595  },
-  { name:"DR Congo",                 geoName:"Dem. Rep. Congo",          flag:"🇨🇩", area:905354  },
-  { name:"Saudi Arabia",             geoName:"Saudi Arabia",             flag:"🇸🇦", area:830000  },
-  { name:"Mexico",                   geoName:"Mexico",                   flag:"🇲🇽", area:758449  },
-  { name:"Indonesia",                geoName:"Indonesia",                flag:"🇮🇩", area:735358  },
-  { name:"Sudan",                    geoName:"Sudan",                    flag:"🇸🇩", area:728215  },
-  { name:"Libya",                    geoName:"Libya",                    flag:"🇱🇾", area:679362  },
-  { name:"Iran",                     geoName:"Iran",                     flag:"🇮🇷", area:636372  },
-  { name:"Mongolia",                 geoName:"Mongolia",                 flag:"🇲🇳", area:604829  },
-  { name:"Peru",                     geoName:"Peru",                     flag:"🇵🇪", area:496225  },
-  { name:"Chad",                     geoName:"Chad",                     flag:"🇹🇩", area:495755  },
-  { name:"Niger",                    geoName:"Niger",                    flag:"🇳🇪", area:489191  },
-  { name:"Angola",                   geoName:"Angola",                   flag:"🇦🇴", area:481354  },
-  { name:"Mali",                     geoName:"Mali",                     flag:"🇲🇱", area:478841  },
-  { name:"South Africa",             geoName:"South Africa",             flag:"🇿🇦", area:471011  },
-  { name:"Colombia",                 geoName:"Colombia",                 flag:"🇨🇴", area:440831  },
-  { name:"Ethiopia",                 geoName:"Ethiopia",                 flag:"🇪🇹", area:426373  },
-  { name:"Bolivia",                  geoName:"Bolivia",                  flag:"🇧🇴", area:424164  },
-  { name:"Mauritania",               geoName:"Mauritania",               flag:"🇲🇷", area:397955  },
-  { name:"Egypt",                    geoName:"Egypt",                    flag:"🇪🇬", area:386662  },
-  { name:"Tanzania",                 geoName:"Tanzania",                 flag:"🇹🇿", area:364900  },
-  { name:"Nigeria",                  geoName:"Nigeria",                  flag:"🇳🇬", area:356669  },
-  { name:"Venezuela",                geoName:"Venezuela",                flag:"🇻🇪", area:353841  },
-  { name:"Mozambique",               geoName:"Mozambique",               flag:"🇲🇿", area:309496  },
-  { name:"Pakistan",                 geoName:"Pakistan",                 flag:"🇵🇰", area:340509  },
-  { name:"Turkey",                   geoName:"Turkey",                   flag:"🇹🇷", area:302535  },
-  { name:"Chile",                    geoName:"Chile",                    flag:"🇨🇱", area:291930  },
-  { name:"France",                   geoName:"France",                   flag:"🇫🇷", area:248573  },
-  { name:"Somalia",                  geoName:"Somalia",                  flag:"🇸🇴", area:246201  },
-  { name:"Central African Republic", geoName:"Central African Rep.",     flag:"🇨🇫", area:240535  },
-  { name:"Ukraine",                  geoName:"Ukraine",                  flag:"🇺🇦", area:233062  },
-  { name:"Madagascar",               geoName:"Madagascar",               flag:"🇲🇬", area:226658  },
-  { name:"Botswana",                 geoName:"Botswana",                 flag:"🇧🇼", area:224607  },
-  { name:"Kenya",                    geoName:"Kenya",                    flag:"🇰🇪", area:224081  },
-  { name:"Yemen",                    geoName:"Yemen",                    flag:"🇾🇪", area:203850  },
-  { name:"Thailand",                 geoName:"Thailand",                 flag:"🇹🇭", area:198117  },
-  { name:"Spain",                    geoName:"Spain",                    flag:"🇪🇸", area:195360  },
-  { name:"Cameroon",                 geoName:"Cameroon",                 flag:"🇨🇲", area:183568  },
-  { name:"Papua New Guinea",         geoName:"Papua New Guinea",         flag:"🇵🇬", area:178704  },
-  { name:"Sweden",                   geoName:"Sweden",                   flag:"🇸🇪", area:173860  },
-  { name:"Uzbekistan",               geoName:"Uzbekistan",               flag:"🇺🇿", area:172742  },
-  { name:"Morocco",                  geoName:"Morocco",                  flag:"🇲🇦", area:172414  },
-  { name:"Iraq",                     geoName:"Iraq",                     flag:"🇮🇶", area:169235  },
-  { name:"Paraguay",                 geoName:"Paraguay",                 flag:"🇵🇾", area:157048  },
-  { name:"Zimbabwe",                 geoName:"Zimbabwe",                 flag:"🇿🇼", area:150872  },
-  { name:"Japan",                    geoName:"Japan",                    flag:"🇯🇵", area:145937  },
-  { name:"Germany",                  geoName:"Germany",                  flag:"🇩🇪", area:137988  },
-  { name:"Finland",                  geoName:"Finland",                  flag:"🇫🇮", area:130559  },
-  { name:"Vietnam",                  geoName:"Vietnam",                  flag:"🇻🇳", area:127882  },
-  { name:"Malaysia",                 geoName:"Malaysia",                 flag:"🇲🇾", area:127320  },
-  { name:"Norway",                   geoName:"Norway",                   flag:"🇳🇴", area:125021  },
-  { name:"Poland",                   geoName:"Poland",                   flag:"🇵🇱", area:120728  },
-  { name:"Ivory Coast",              geoName:"Côte d'Ivoire",            flag:"🇨🇮", area:124504  },
-  { name:"Oman",                     geoName:"Oman",                     flag:"🇴🇲", area:119499  },
-  { name:"Italy",                    geoName:"Italy",                    flag:"🇮🇹", area:116348  },
-  { name:"Philippines",              geoName:"Philippines",              flag:"🇵🇭", area:115831  },
-  { name:"Ecuador",                  geoName:"Ecuador",                  flag:"🇪🇨", area:109484  },
-  { name:"Burkina Faso",             geoName:"Burkina Faso",             flag:"🇧🇫", area:105869  },
-  { name:"New Zealand",              geoName:"New Zealand",              flag:"🇳🇿", area:103736  },
-  { name:"Gabon",                    geoName:"Gabon",                    flag:"🇬🇦", area:103347  },
-  { name:"United Kingdom",           geoName:"United Kingdom",           flag:"🇬🇧", area:94058   },
-  { name:"Uganda",                   geoName:"Uganda",                   flag:"🇺🇬", area:93065   },
-  { name:"Ghana",                    geoName:"Ghana",                    flag:"🇬🇭", area:92098   },
-  { name:"Romania",                  geoName:"Romania",                  flag:"🇷🇴", area:91699   },
-  { name:"Laos",                     geoName:"Laos",                     flag:"🇱🇦", area:91429   },
-  { name:"Guinea",                   geoName:"Guinea",                   flag:"🇬🇳", area:94926   },
-  { name:"Belarus",                  geoName:"Belarus",                  flag:"🇧🇾", area:80155   },
-  { name:"Cuba",                     geoName:"Cuba",                     flag:"🇨🇺", area:42804   },
-  { name:"South Korea",              geoName:"South Korea",              flag:"🇰🇷", area:38622   },
-  { name:"Iceland",                  geoName:"Iceland",                  flag:"🇮🇸", area:39769   },
-  { name:"Hungary",                  geoName:"Hungary",                  flag:"🇭🇺", area:35919   },
-  { name:"Portugal",                 geoName:"Portugal",                 flag:"🇵🇹", area:35556   },
-  { name:"Jordan",                   geoName:"Jordan",                   flag:"🇯🇴", area:34495   },
-  { name:"Austria",                  geoName:"Austria",                  flag:"🇦🇹", area:32383   },
-  { name:"UAE",                      geoName:"United Arab Emirates",     flag:"🇦🇪", area:32278   },
-  { name:"Czech Republic",           geoName:"Czechia",                  flag:"🇨🇿", area:30450   },
-  { name:"Ireland",                  geoName:"Ireland",                  flag:"🇮🇪", area:27133   },
-  { name:"Georgia",                  geoName:"Georgia",                  flag:"🇬🇪", area:26911   },
-  { name:"Sri Lanka",                geoName:"Sri Lanka",                flag:"🇱🇰", area:25332   },
-  { name:"Lithuania",                geoName:"Lithuania",                flag:"🇱🇹", area:25212   },
-  { name:"Latvia",                   geoName:"Latvia",                   flag:"🇱🇻", area:24938   },
-  { name:"Croatia",                  geoName:"Croatia",                  flag:"🇭🇷", area:21851   },
-  { name:"Bosnia",                   geoName:"Bosnia and Herz.",         flag:"🇧🇦", area:19767   },
-  { name:"Estonia",                  geoName:"Estonia",                  flag:"🇪🇪", area:17462   },
-  { name:"Denmark",                  geoName:"Denmark",                  flag:"🇩🇰", area:16639   },
-  { name:"Netherlands",              geoName:"Netherlands",              flag:"🇳🇱", area:16040   },
-  { name:"Switzerland",              geoName:"Switzerland",              flag:"🇨🇭", area:15940   },
-  { name:"Taiwan",                   geoName:"Taiwan",                   flag:"🇹🇼", area:13974   },
-  { name:"Moldova",                  geoName:"Moldova",                  flag:"🇲🇩", area:13070   },
-  { name:"Belgium",                  geoName:"Belgium",                  flag:"🇧🇪", area:11787   },
-  { name:"Albania",                  geoName:"Albania",                  flag:"🇦🇱", area:11100   },
-  { name:"Israel",                   geoName:"Israel",                   flag:"🇮🇱", area:8019    },
-  { name:"Lebanon",                  geoName:"Lebanon",                  flag:"🇱🇧", area:4036    },
-  { name:"Qatar",                    geoName:"Qatar",                    flag:"🇶🇦", area:4473    },
-  { name:"Jamaica",                  geoName:"Jamaica",                  flag:"🇯🇲", area:4244    },
-  { name:"Cyprus",                   geoName:"Cyprus",                   flag:"🇨🇾", area:3572    },
-  { name:"Luxembourg",               geoName:"Luxembourg",               flag:"🇱🇺", area:999     },
-  { name:"Singapore",                geoName:"Singapore",                flag:"🇸🇬", area:281     }
+  { name:"Russia",                   geoName:"Russia",                   flag:"🇷🇺", area:6612100, pop:144400000,  gdp:2184,  medals:{g:395,s:319,b:296} },
+  { name:"Canada",                   geoName:"Canada",                   flag:"🇨🇦", area:3855100, pop:38900000,   gdp:2140,  medals:{g:73,s:103,b:136} },
+  { name:"United States",            geoName:"United States of America", flag:"🇺🇸", area:3796742, pop:335000000,  gdp:29170, medals:{g:1061,s:833,b:737} },
+  { name:"China",                    geoName:"China",                    flag:"🇨🇳", area:3705407, pop:1410000000, gdp:19530, medals:{g:263,s:200,b:172} },
+  { name:"Brazil",                   geoName:"Brazil",                   flag:"🇧🇷", area:3287956, pop:215300000,  gdp:2330,  medals:{g:30,s:36,b:63} },
+  { name:"Australia",                geoName:"Australia",                flag:"🇦🇺", area:2969907, pop:26500000,   gdp:1820,  medals:{g:164,s:174,b:187} },
+  { name:"India",                    geoName:"India",                    flag:"🇮🇳", area:1269219, pop:1428600000, gdp:4270,  medals:{g:10,s:9,b:16} },
+  { name:"Argentina",                geoName:"Argentina",                flag:"🇦🇷", area:1073520, pop:46600000,   gdp:640,   medals:{g:23,s:25,b:28} },
+  { name:"Kazakhstan",               geoName:"Kazakhstan",               flag:"🇰🇿", area:1052090, pop:19600000,   gdp:310,   medals:{g:16,s:21,b:35} },
+  { name:"Algeria",                  geoName:"Algeria",                  flag:"🇩🇿", area:919595,  pop:45600000,   gdp:270,   medals:{g:5,s:4,b:8} },
+  { name:"DR Congo",                 geoName:"Dem. Rep. Congo",          flag:"🇨🇩", area:905354,  pop:102200000,  gdp:65,    medals:{g:0,s:0,b:1} },
+  { name:"Saudi Arabia",             geoName:"Saudi Arabia",             flag:"🇸🇦", area:830000,  pop:36900000,   gdp:1100,  medals:{g:0,s:1,b:4} },
+  { name:"Mexico",                   geoName:"Mexico",                   flag:"🇲🇽", area:758449,  pop:128500000,  gdp:1490,  medals:{g:13,s:21,b:29} },
+  { name:"Indonesia",                geoName:"Indonesia",                flag:"🇮🇩", area:735358,  pop:277500000,  gdp:1470,  medals:{g:10,s:17,b:15} },
+  { name:"Sudan",                    geoName:"Sudan",                    flag:"🇸🇩", area:728215,  pop:46900000,   gdp:40,    medals:{g:0,s:1,b:0} },
+  { name:"Libya",                    geoName:"Libya",                    flag:"🇱🇾", area:679362,  pop:7200000,    gdp:47,    medals:{g:0,s:0,b:0} },
+  { name:"Iran",                     geoName:"Iran",                     flag:"🇮🇷", area:636372,  pop:87900000,   gdp:401,   medals:{g:19,s:21,b:26} },
+  { name:"Mongolia",                 geoName:"Mongolia",                 flag:"🇲🇳", area:604829,  pop:3400000,    gdp:21,    medals:{g:2,s:10,b:13} },
+  { name:"Peru",                     geoName:"Peru",                     flag:"🇵🇪", area:496225,  pop:33700000,   gdp:280,   medals:{g:1,s:11,b:13} },
+  { name:"Chad",                     geoName:"Chad",                     flag:"🇹🇩", area:495755,  pop:18300000,   gdp:13,    medals:{g:0,s:0,b:0} },
+  { name:"Niger",                    geoName:"Niger",                    flag:"🇳🇪", area:489191,  pop:26200000,   gdp:17,    medals:{g:0,s:0,b:0} },
+  { name:"Angola",                   geoName:"Angola",                   flag:"🇦🇴", area:481354,  pop:36700000,   gdp:92,    medals:{g:0,s:0,b:0} },
+  { name:"Mali",                     geoName:"Mali",                     flag:"🇲🇱", area:478841,  pop:23300000,   gdp:20,    medals:{g:0,s:0,b:1} },
+  { name:"South Africa",             geoName:"South Africa",             flag:"🇿🇦", area:471011,  pop:60400000,   gdp:410,   medals:{g:23,s:27,b:30} },
+  { name:"Colombia",                 geoName:"Colombia",                 flag:"🇨🇴", area:440831,  pop:52200000,   gdp:405,   medals:{g:6,s:13,b:14} },
+  { name:"Ethiopia",                 geoName:"Ethiopia",                 flag:"🇪🇹", area:426373,  pop:126500000,  gdp:165,   medals:{g:23,s:12,b:19} },
+  { name:"Bolivia",                  geoName:"Bolivia",                  flag:"🇧🇴", area:424164,  pop:12100000,   gdp:46,    medals:{g:0,s:0,b:0} },
+  { name:"Mauritania",               geoName:"Mauritania",               flag:"🇲🇷", area:397955,  pop:4700000,    gdp:11,    medals:{g:0,s:0,b:0} },
+  { name:"Egypt",                    geoName:"Egypt",                    flag:"🇪🇬", area:386662,  pop:105000000,  gdp:395,   medals:{g:7,s:10,b:14} },
+  { name:"Tanzania",                 geoName:"Tanzania",                 flag:"🇹🇿", area:364900,  pop:65500000,   gdp:85,    medals:{g:0,s:2,b:3} },
+  { name:"Nigeria",                  geoName:"Nigeria",                  flag:"🇳🇬", area:356669,  pop:223800000,  gdp:253,   medals:{g:3,s:8,b:13} },
+  { name:"Venezuela",                geoName:"Venezuela",                flag:"🇻🇪", area:353841,  pop:28800000,   gdp:103,   medals:{g:2,s:3,b:10} },
+  { name:"Mozambique",               geoName:"Mozambique",               flag:"🇲🇿", area:309496,  pop:33100000,   gdp:19,    medals:{g:1,s:0,b:1} },
+  { name:"Pakistan",                 geoName:"Pakistan",                 flag:"🇵🇰", area:340509,  pop:231400000,  gdp:374,   medals:{g:3,s:3,b:4} },
+  { name:"Turkey",                   geoName:"Turkey",                   flag:"🇹🇷", area:302535,  pop:85300000,   gdp:1108,  medals:{g:41,s:36,b:57} },
+  { name:"Chile",                    geoName:"Chile",                    flag:"🇨🇱", area:291930,  pop:19600000,   gdp:360,   medals:{g:2,s:7,b:4} },
+  { name:"France",                   geoName:"France",                   flag:"🇫🇷", area:248573,  pop:68400000,   gdp:3130,  medals:{g:248,s:276,b:316} },
+  { name:"Somalia",                  geoName:"Somalia",                  flag:"🇸🇴", area:246201,  pop:18100000,   gdp:10,    medals:{g:0,s:0,b:0} },
+  { name:"Central African Republic", geoName:"Central African Rep.",     flag:"🇨🇫", area:240535,  pop:5600000,    gdp:3,     medals:{g:0,s:0,b:0} },
+  { name:"Ukraine",                  geoName:"Ukraine",                  flag:"🇺🇦", area:233062,  pop:43500000,   gdp:178,   medals:{g:46,s:52,b:65} },
+  { name:"Madagascar",               geoName:"Madagascar",               flag:"🇲🇬", area:226658,  pop:29600000,   gdp:16,    medals:{g:0,s:2,b:0} },
+  { name:"Botswana",                 geoName:"Botswana",                 flag:"🇧🇼", area:224607,  pop:2600000,    gdp:22,    medals:{g:0,s:0,b:2} },
+  { name:"Kenya",                    geoName:"Kenya",                    flag:"🇰🇪", area:224081,  pop:55100000,   gdp:126,   medals:{g:36,s:41,b:32} },
+  { name:"Yemen",                    geoName:"Yemen",                    flag:"🇾🇪", area:203850,  pop:34400000,   gdp:22,    medals:{g:0,s:0,b:1} },
+  { name:"Thailand",                 geoName:"Thailand",                 flag:"🇹🇭", area:198117,  pop:71800000,   gdp:574,   medals:{g:11,s:9,b:18} },
+  { name:"Spain",                    geoName:"Spain",                    flag:"🇪🇸", area:195360,  pop:47800000,   gdp:1726,  medals:{g:45,s:62,b:40} },
+  { name:"Cameroon",                 geoName:"Cameroon",                 flag:"🇨🇲", area:183568,  pop:28700000,   gdp:48,    medals:{g:3,s:1,b:1} },
+  { name:"Papua New Guinea",         geoName:"Papua New Guinea",         flag:"🇵🇬", area:178704,  pop:10300000,   gdp:30,    medals:{g:0,s:0,b:0} },
+  { name:"Sweden",                   geoName:"Sweden",                   flag:"🇸🇪", area:173860,  pop:10500000,   gdp:600,   medals:{g:145,s:170,b:179} },
+  { name:"Uzbekistan",               geoName:"Uzbekistan",               flag:"🇺🇿", area:172742,  pop:36500000,   gdp:115,   medals:{g:12,s:6,b:19} },
+  { name:"Morocco",                  geoName:"Morocco",                  flag:"🇲🇦", area:172414,  pop:37800000,   gdp:160,   medals:{g:6,s:5,b:12} },
+  { name:"Iraq",                     geoName:"Iraq",                     flag:"🇮🇶", area:169235,  pop:42300000,   gdp:268,   medals:{g:0,s:0,b:1} },
+  { name:"Paraguay",                 geoName:"Paraguay",                 flag:"🇵🇾", area:157048,  pop:7400000,    gdp:45,    medals:{g:0,s:0,b:0} },
+  { name:"Zimbabwe",                 geoName:"Zimbabwe",                 flag:"🇿🇼", area:150872,  pop:16300000,   gdp:26,    medals:{g:3,s:4,b:1} },
+  { name:"Japan",                    geoName:"Japan",                    flag:"🇯🇵", area:145937,  pop:124500000,  gdp:4110,  medals:{g:170,s:141,b:177} },
+  { name:"Germany",                  geoName:"Germany",                  flag:"🇩🇪", area:137988,  pop:84400000,   gdp:4920,  medals:{g:275,s:313,b:394} },
+  { name:"Finland",                  geoName:"Finland",                  flag:"🇫🇮", area:130559,  pop:5600000,    gdp:305,   medals:{g:101,s:85,b:117} },
+  { name:"Vietnam",                  geoName:"Vietnam",                  flag:"🇻🇳", area:127882,  pop:98900000,   gdp:449,   medals:{g:0,s:3,b:2} },
+  { name:"Malaysia",                 geoName:"Malaysia",                 flag:"🇲🇾", area:127320,  pop:33600000,   gdp:430,   medals:{g:0,s:8,b:9} },
+  { name:"Norway",                   geoName:"Norway",                   flag:"🇳🇴", area:125021,  pop:5500000,    gdp:548,   medals:{g:60,s:49,b:47} },
+  { name:"Poland",                   geoName:"Poland",                   flag:"🇵🇱", area:120728,  pop:37700000,   gdp:842,   medals:{g:71,s:84,b:131} },
+  { name:"Ivory Coast",              geoName:"Côte d'Ivoire",            flag:"🇨🇮", area:124504,  pop:27500000,   gdp:78,    medals:{g:1,s:1,b:2} },
+  { name:"Oman",                     geoName:"Oman",                     flag:"🇴🇲", area:119499,  pop:4800000,    gdp:108,   medals:{g:0,s:0,b:0} },
+  { name:"Italy",                    geoName:"Italy",                    flag:"🇮🇹", area:116348,  pop:58800000,   gdp:2330,  medals:{g:235,s:200,b:238} },
+  { name:"Philippines",              geoName:"Philippines",              flag:"🇵🇭", area:115831,  pop:115600000,  gdp:434,   medals:{g:1,s:3,b:23} },
+  { name:"Ecuador",                  geoName:"Ecuador",                  flag:"🇪🇨", area:109484,  pop:18000000,   gdp:124,   medals:{g:1,s:1,b:0} },
+  { name:"Burkina Faso",             geoName:"Burkina Faso",             flag:"🇧🇫", area:105869,  pop:22700000,   gdp:19,    medals:{g:0,s:0,b:0} },
+  { name:"New Zealand",              geoName:"New Zealand",              flag:"🇳🇿", area:103736,  pop:5100000,    gdp:253,   medals:{g:46,s:28,b:48} },
+  { name:"Gabon",                    geoName:"Gabon",                    flag:"🇬🇦", area:103347,  pop:2400000,    gdp:21,    medals:{g:0,s:0,b:0} },
+  { name:"United Kingdom",           geoName:"United Kingdom",           flag:"🇬🇧", area:94058,   pop:67700000,   gdp:3340,  medals:{g:263,s:295,b:293} },
+  { name:"Uganda",                   geoName:"Uganda",                   flag:"🇺🇬", area:93065,   pop:48600000,   gdp:49,    medals:{g:7,s:4,b:7} },
+  { name:"Ghana",                    geoName:"Ghana",                    flag:"🇬🇭", area:92098,   pop:33500000,   gdp:79,    medals:{g:0,s:1,b:3} },
+  { name:"Romania",                  geoName:"Romania",                  flag:"🇷🇴", area:91699,   pop:19000000,   gdp:390,   medals:{g:89,s:95,b:122} },
+  { name:"Laos",                     geoName:"Laos",                     flag:"🇱🇦", area:91429,   pop:7500000,    gdp:15,    medals:{g:0,s:0,b:0} },
+  { name:"Guinea",                   geoName:"Guinea",                   flag:"🇬🇳", area:94926,   pop:13500000,   gdp:18,    medals:{g:0,s:0,b:0} },
+  { name:"Belarus",                  geoName:"Belarus",                  flag:"🇧🇾", area:80155,   pop:9400000,    gdp:73,    medals:{g:12,s:27,b:39} },
+  { name:"Cuba",                     geoName:"Cuba",                     flag:"🇨🇺", area:42804,   pop:11200000,   gdp:107,   medals:{g:82,s:68,b:80} },
+  { name:"South Korea",              geoName:"South Korea",              flag:"🇰🇷", area:38622,   pop:51700000,   gdp:1870,  medals:{g:96,s:89,b:91} },
+  { name:"Iceland",                  geoName:"Iceland",                  flag:"🇮🇸", area:39769,   pop:376000,     gdp:31,    medals:{g:0,s:0,b:0} },
+  { name:"Hungary",                  geoName:"Hungary",                  flag:"🇭🇺", area:35919,   pop:9700000,    gdp:225,   medals:{g:180,s:152,b:176} },
+  { name:"Portugal",                 geoName:"Portugal",                 flag:"🇵🇹", area:35556,   pop:10300000,   gdp:288,   medals:{g:7,s:13,b:14} },
+  { name:"Jordan",                   geoName:"Jordan",                   flag:"🇯🇴", area:34495,   pop:10200000,   gdp:55,    medals:{g:0,s:1,b:3} },
+  { name:"Austria",                  geoName:"Austria",                  flag:"🇦🇹", area:32383,   pop:9100000,    gdp:530,   medals:{g:18,s:33,b:43} },
+  { name:"UAE",                      geoName:"United Arab Emirates",     flag:"🇦🇪", area:32278,   pop:9900000,    gdp:507,   medals:{g:1,s:1,b:1} },
+  { name:"Czech Republic",           geoName:"Czechia",                  flag:"🇨🇿", area:30450,   pop:10900000,   gdp:360,   medals:{g:24,s:34,b:30} },
+  { name:"Ireland",                  geoName:"Ireland",                  flag:"🇮🇪", area:27133,   pop:5100000,    gdp:571,   medals:{g:10,s:13,b:15} },
+  { name:"Georgia",                  geoName:"Georgia",                  flag:"🇬🇪", area:26911,   pop:3700000,    gdp:31,    medals:{g:7,s:5,b:14} },
+  { name:"Sri Lanka",                geoName:"Sri Lanka",                flag:"🇱🇰", area:25332,   pop:22200000,   gdp:84,    medals:{g:0,s:2,b:0} },
+  { name:"Lithuania",                geoName:"Lithuania",                flag:"🇱🇹", area:25212,   pop:2800000,    gdp:82,    medals:{g:3,s:5,b:1} },
+  { name:"Latvia",                   geoName:"Latvia",                   flag:"🇱🇻", area:24938,   pop:1800000,    gdp:45,    medals:{g:3,s:12,b:7} },
+  { name:"Croatia",                  geoName:"Croatia",                  flag:"🇭🇷", area:21851,   pop:3900000,    gdp:82,    medals:{g:11,s:11,b:9} },
+  { name:"Bosnia",                   geoName:"Bosnia and Herz.",         flag:"🇧🇦", area:19767,   pop:3200000,    gdp:24,    medals:{g:0,s:0,b:2} },
+  { name:"Estonia",                  geoName:"Estonia",                  flag:"🇪🇪", area:17462,   pop:1400000,    gdp:42,    medals:{g:9,s:10,b:15} },
+  { name:"Denmark",                  geoName:"Denmark",                  flag:"🇩🇰", area:16639,   pop:5900000,    gdp:406,   medals:{g:46,s:71,b:76} },
+  { name:"Netherlands",              geoName:"Netherlands",              flag:"🇳🇱", area:16040,   pop:17900000,   gdp:1170,  medals:{g:105,s:116,b:131} },
+  { name:"Switzerland",              geoName:"Switzerland",              flag:"🇨🇭", area:15940,   pop:8800000,    gdp:905,   medals:{g:50,s:72,b:77} },
+  { name:"Taiwan",                   geoName:"Taiwan",                   flag:"🇹🇼", area:13974,   pop:23600000,   gdp:804,   medals:{g:7,s:11,b:19} },
+  { name:"Moldova",                  geoName:"Moldova",                  flag:"🇲🇩", area:13070,   pop:2600000,    gdp:14,    medals:{g:0,s:3,b:5} },
+  { name:"Belgium",                  geoName:"Belgium",                  flag:"🇧🇪", area:11787,   pop:11600000,   gdp:630,   medals:{g:40,s:53,b:57} },
+  { name:"Albania",                  geoName:"Albania",                  flag:"🇦🇱", area:11100,   pop:2800000,    gdp:24,    medals:{g:0,s:1,b:0} },
+  { name:"Israel",                   geoName:"Israel",                   flag:"🇮🇱", area:8019,    pop:9700000,    gdp:528,   medals:{g:1,s:1,b:7} },
+  { name:"Lebanon",                  geoName:"Lebanon",                  flag:"🇱🇧", area:4036,    pop:5500000,    gdp:21,    medals:{g:0,s:2,b:2} },
+  { name:"Qatar",                    geoName:"Qatar",                    flag:"🇶🇦", area:4473,    pop:2700000,    gdp:220,   medals:{g:2,s:0,b:0} },
+  { name:"Jamaica",                  geoName:"Jamaica",                  flag:"🇯🇲", area:4244,    pop:2800000,    gdp:19,    medals:{g:26,s:38,b:21} },
+  { name:"Cyprus",                   geoName:"Cyprus",                   flag:"🇨🇾", area:3572,    pop:1300000,    gdp:33,    medals:{g:0,s:1,b:0} },
+  { name:"Luxembourg",               geoName:"Luxembourg",               flag:"🇱🇺", area:999,     pop:660000,     gdp:86,    medals:{g:1,s:1,b:0} },
+  { name:"Singapore",                geoName:"Singapore",                flag:"🇸🇬", area:281,     pop:5900000,    gdp:501,   medals:{g:0,s:2,b:2} }
+];
+  { name:"United States",            geoName:"United States of America", flag:"🇺🇸", area:3796742, pop:335000000 },
+  { name:"China",                    geoName:"China",                    flag:"🇨🇳", area:3705407, pop:1410000000},
+  { name:"Brazil",                   geoName:"Brazil",                   flag:"🇧🇷", area:3287956, pop:215300000 },
+  { name:"Australia",                geoName:"Australia",                flag:"🇦🇺", area:2969907, pop:26500000  },
+  { name:"India",                    geoName:"India",                    flag:"🇮🇳", area:1269219, pop:1428600000},
+  { name:"Argentina",                geoName:"Argentina",                flag:"🇦🇷", area:1073520, pop:46600000  },
+  { name:"Kazakhstan",               geoName:"Kazakhstan",               flag:"🇰🇿", area:1052090, pop:19600000  },
+  { name:"Algeria",                  geoName:"Algeria",                  flag:"🇩🇿", area:919595,  pop:45600000  },
+  { name:"DR Congo",                 geoName:"Dem. Rep. Congo",          flag:"🇨🇩", area:905354,  pop:102200000 },
+  { name:"Saudi Arabia",             geoName:"Saudi Arabia",             flag:"🇸🇦", area:830000,  pop:36900000  },
+  { name:"Mexico",                   geoName:"Mexico",                   flag:"🇲🇽", area:758449,  pop:128500000 },
+  { name:"Indonesia",                geoName:"Indonesia",                flag:"🇮🇩", area:735358,  pop:277500000 },
+  { name:"Sudan",                    geoName:"Sudan",                    flag:"🇸🇩", area:728215,  pop:46900000  },
+  { name:"Libya",                    geoName:"Libya",                    flag:"🇱🇾", area:679362,  pop:7200000   },
+  { name:"Iran",                     geoName:"Iran",                     flag:"🇮🇷", area:636372,  pop:87900000  },
+  { name:"Mongolia",                 geoName:"Mongolia",                 flag:"🇲🇳", area:604829,  pop:3400000   },
+  { name:"Peru",                     geoName:"Peru",                     flag:"🇵🇪", area:496225,  pop:33700000  },
+  { name:"Chad",                     geoName:"Chad",                     flag:"🇹🇩", area:495755,  pop:18300000  },
+  { name:"Niger",                    geoName:"Niger",                    flag:"🇳🇪", area:489191,  pop:26200000  },
+  { name:"Angola",                   geoName:"Angola",                   flag:"🇦🇴", area:481354,  pop:36700000  },
+  { name:"Mali",                     geoName:"Mali",                     flag:"🇲🇱", area:478841,  pop:23300000  },
+  { name:"South Africa",             geoName:"South Africa",             flag:"🇿🇦", area:471011,  pop:60400000  },
+  { name:"Colombia",                 geoName:"Colombia",                 flag:"🇨🇴", area:440831,  pop:52200000  },
+  { name:"Ethiopia",                 geoName:"Ethiopia",                 flag:"🇪🇹", area:426373,  pop:126500000 },
+  { name:"Bolivia",                  geoName:"Bolivia",                  flag:"🇧🇴", area:424164,  pop:12100000  },
+  { name:"Mauritania",               geoName:"Mauritania",               flag:"🇲🇷", area:397955,  pop:4700000   },
+  { name:"Egypt",                    geoName:"Egypt",                    flag:"🇪🇬", area:386662,  pop:105000000 },
+  { name:"Tanzania",                 geoName:"Tanzania",                 flag:"🇹🇿", area:364900,  pop:65500000  },
+  { name:"Nigeria",                  geoName:"Nigeria",                  flag:"🇳🇬", area:356669,  pop:223800000 },
+  { name:"Venezuela",                geoName:"Venezuela",                flag:"🇻🇪", area:353841,  pop:28800000  },
+  { name:"Mozambique",               geoName:"Mozambique",               flag:"🇲🇿", area:309496,  pop:33100000  },
+  { name:"Pakistan",                 geoName:"Pakistan",                 flag:"🇵🇰", area:340509,  pop:231400000 },
+  { name:"Turkey",                   geoName:"Turkey",                   flag:"🇹🇷", area:302535,  pop:85300000  },
+  { name:"Chile",                    geoName:"Chile",                    flag:"🇨🇱", area:291930,  pop:19600000  },
+  { name:"France",                   geoName:"France",                   flag:"🇫🇷", area:248573,  pop:68400000  },
+  { name:"Somalia",                  geoName:"Somalia",                  flag:"🇸🇴", area:246201,  pop:18100000  },
+  { name:"Central African Republic", geoName:"Central African Rep.",     flag:"🇨🇫", area:240535,  pop:5600000   },
+  { name:"Ukraine",                  geoName:"Ukraine",                  flag:"🇺🇦", area:233062,  pop:43500000  },
+  { name:"Madagascar",               geoName:"Madagascar",               flag:"🇲🇬", area:226658,  pop:29600000  },
+  { name:"Botswana",                 geoName:"Botswana",                 flag:"🇧🇼", area:224607,  pop:2600000   },
+  { name:"Kenya",                    geoName:"Kenya",                    flag:"🇰🇪", area:224081,  pop:55100000  },
+  { name:"Yemen",                    geoName:"Yemen",                    flag:"🇾🇪", area:203850,  pop:34400000  },
+  { name:"Thailand",                 geoName:"Thailand",                 flag:"🇹🇭", area:198117,  pop:71800000  },
+  { name:"Spain",                    geoName:"Spain",                    flag:"🇪🇸", area:195360,  pop:47800000  },
+  { name:"Cameroon",                 geoName:"Cameroon",                 flag:"🇨🇲", area:183568,  pop:28700000  },
+  { name:"Papua New Guinea",         geoName:"Papua New Guinea",         flag:"🇵🇬", area:178704,  pop:10300000  },
+  { name:"Sweden",                   geoName:"Sweden",                   flag:"🇸🇪", area:173860,  pop:10500000  },
+  { name:"Uzbekistan",               geoName:"Uzbekistan",               flag:"🇺🇿", area:172742,  pop:36500000  },
+  { name:"Morocco",                  geoName:"Morocco",                  flag:"🇲🇦", area:172414,  pop:37800000  },
+  { name:"Iraq",                     geoName:"Iraq",                     flag:"🇮🇶", area:169235,  pop:42300000  },
+  { name:"Paraguay",                 geoName:"Paraguay",                 flag:"🇵🇾", area:157048,  pop:7400000   },
+  { name:"Zimbabwe",                 geoName:"Zimbabwe",                 flag:"🇿🇼", area:150872,  pop:16300000  },
+  { name:"Japan",                    geoName:"Japan",                    flag:"🇯🇵", area:145937,  pop:124500000 },
+  { name:"Germany",                  geoName:"Germany",                  flag:"🇩🇪", area:137988,  pop:84400000  },
+  { name:"Finland",                  geoName:"Finland",                  flag:"🇫🇮", area:130559,  pop:5600000   },
+  { name:"Vietnam",                  geoName:"Vietnam",                  flag:"🇻🇳", area:127882,  pop:98900000  },
+  { name:"Malaysia",                 geoName:"Malaysia",                 flag:"🇲🇾", area:127320,  pop:33600000  },
+  { name:"Norway",                   geoName:"Norway",                   flag:"🇳🇴", area:125021,  pop:5500000   },
+  { name:"Poland",                   geoName:"Poland",                   flag:"🇵🇱", area:120728,  pop:37700000  },
+  { name:"Ivory Coast",              geoName:"Côte d'Ivoire",            flag:"🇨🇮", area:124504,  pop:27500000  },
+  { name:"Oman",                     geoName:"Oman",                     flag:"🇴🇲", area:119499,  pop:4800000   },
+  { name:"Italy",                    geoName:"Italy",                    flag:"🇮🇹", area:116348,  pop:58800000  },
+  { name:"Philippines",              geoName:"Philippines",              flag:"🇵🇭", area:115831,  pop:115600000 },
+  { name:"Ecuador",                  geoName:"Ecuador",                  flag:"🇪🇨", area:109484,  pop:18000000  },
+  { name:"Burkina Faso",             geoName:"Burkina Faso",             flag:"🇧🇫", area:105869,  pop:22700000  },
+  { name:"New Zealand",              geoName:"New Zealand",              flag:"🇳🇿", area:103736,  pop:5100000   },
+  { name:"Gabon",                    geoName:"Gabon",                    flag:"🇬🇦", area:103347,  pop:2400000   },
+  { name:"United Kingdom",           geoName:"United Kingdom",           flag:"🇬🇧", area:94058,   pop:67700000  },
+  { name:"Uganda",                   geoName:"Uganda",                   flag:"🇺🇬", area:93065,   pop:48600000  },
+  { name:"Ghana",                    geoName:"Ghana",                    flag:"🇬🇭", area:92098,   pop:33500000  },
+  { name:"Romania",                  geoName:"Romania",                  flag:"🇷🇴", area:91699,   pop:19000000  },
+  { name:"Laos",                     geoName:"Laos",                     flag:"🇱🇦", area:91429,   pop:7500000   },
+  { name:"Guinea",                   geoName:"Guinea",                   flag:"🇬🇳", area:94926,   pop:13500000  },
+  { name:"Belarus",                  geoName:"Belarus",                  flag:"🇧🇾", area:80155,   pop:9400000   },
+  { name:"Cuba",                     geoName:"Cuba",                     flag:"🇨🇺", area:42804,   pop:11200000  },
+  { name:"South Korea",              geoName:"South Korea",              flag:"🇰🇷", area:38622,   pop:51700000  },
+  { name:"Iceland",                  geoName:"Iceland",                  flag:"🇮🇸", area:39769,   pop:376000    },
+  { name:"Hungary",                  geoName:"Hungary",                  flag:"🇭🇺", area:35919,   pop:9700000   },
+  { name:"Portugal",                 geoName:"Portugal",                 flag:"🇵🇹", area:35556,   pop:10300000  },
+  { name:"Jordan",                   geoName:"Jordan",                   flag:"🇯🇴", area:34495,   pop:10200000  },
+  { name:"Austria",                  geoName:"Austria",                  flag:"🇦🇹", area:32383,   pop:9100000   },
+  { name:"UAE",                      geoName:"United Arab Emirates",     flag:"🇦🇪", area:32278,   pop:9900000   },
+  { name:"Czech Republic",           geoName:"Czechia",                  flag:"🇨🇿", area:30450,   pop:10900000  },
+  { name:"Ireland",                  geoName:"Ireland",                  flag:"🇮🇪", area:27133,   pop:5100000   },
+  { name:"Georgia",                  geoName:"Georgia",                  flag:"🇬🇪", area:26911,   pop:3700000   },
+  { name:"Sri Lanka",                geoName:"Sri Lanka",                flag:"🇱🇰", area:25332,   pop:22200000  },
+  { name:"Lithuania",                geoName:"Lithuania",                flag:"🇱🇹", area:25212,   pop:2800000   },
+  { name:"Latvia",                   geoName:"Latvia",                   flag:"🇱🇻", area:24938,   pop:1800000   },
+  { name:"Croatia",                  geoName:"Croatia",                  flag:"🇭🇷", area:21851,   pop:3900000   },
+  { name:"Bosnia",                   geoName:"Bosnia and Herz.",         flag:"🇧🇦", area:19767,   pop:3200000   },
+  { name:"Estonia",                  geoName:"Estonia",                  flag:"🇪🇪", area:17462,   pop:1400000   },
+  { name:"Denmark",                  geoName:"Denmark",                  flag:"🇩🇰", area:16639,   pop:5900000   },
+  { name:"Netherlands",              geoName:"Netherlands",              flag:"🇳🇱", area:16040,   pop:17900000  },
+  { name:"Switzerland",              geoName:"Switzerland",              flag:"🇨🇭", area:15940,   pop:8800000   },
+  { name:"Taiwan",                   geoName:"Taiwan",                   flag:"🇹🇼", area:13974,   pop:23600000  },
+  { name:"Moldova",                  geoName:"Moldova",                  flag:"🇲🇩", area:13070,   pop:2600000   },
+  { name:"Belgium",                  geoName:"Belgium",                  flag:"🇧🇪", area:11787,   pop:11600000  },
+  { name:"Albania",                  geoName:"Albania",                  flag:"🇦🇱", area:11100,   pop:2800000   },
+  { name:"Israel",                   geoName:"Israel",                   flag:"🇮🇱", area:8019,    pop:9700000   },
+  { name:"Lebanon",                  geoName:"Lebanon",                  flag:"🇱🇧", area:4036,    pop:5500000   },
+  { name:"Qatar",                    geoName:"Qatar",                    flag:"🇶🇦", area:4473,    pop:2700000   },
+  { name:"Jamaica",                  geoName:"Jamaica",                  flag:"🇯🇲", area:4244,    pop:2800000   },
+  { name:"Cyprus",                   geoName:"Cyprus",                   flag:"🇨🇾", area:3572,    pop:1300000   },
+  { name:"Luxembourg",               geoName:"Luxembourg",               flag:"🇱🇺", area:999,     pop:660000    },
+  { name:"Singapore",                geoName:"Singapore",                flag:"🇸🇬", area:281,     pop:5900000   }
 ];
 
 // ── Progressive difficulty ──
@@ -407,10 +553,171 @@ const TIGHTEN = 0.02;
 const FLOOR_RATIO = 1.04;
 const MAX_LIVES = 3;
 
+let gameMode = 'area'; // 'area' or 'population'
 let difficulty = 'easy';
 let roundNum = 0, totalPoints = 0, streak = 0, lives = MAX_LIVES;
 let answered = false, currentPair = null, usedPairs = new Set();
-let geoFeatures = null; // Map: geoName -> GeoJSON feature
+let geoFeatures = null;
+
+function getValue(country) {
+  if (gameMode === 'population') return country.pop;
+  if (gameMode === 'gdp')        return country.gdp;
+  if (gameMode === 'medals')     return country.medals.g + country.medals.s + country.medals.b;
+  return country.area;
+}
+
+function formatValue(country) {
+  if (gameMode === 'population') {
+    const p = country.pop;
+    if (p >= 1e9) return (p / 1e9).toFixed(2) + 'B people';
+    if (p >= 1e6) return (p / 1e6).toFixed(1) + 'M people';
+    return p.toLocaleString() + ' people';
+  }
+  if (gameMode === 'gdp') {
+    const g = country.gdp;
+    if (g >= 1000) return '$' + (g / 1000).toFixed(2) + 'T';
+    return '$' + g + 'B';
+  }
+  if (gameMode === 'medals') {
+    const m = country.medals;
+    const t = m.g + m.s + m.b;
+    return t + ' medals (🥇' + m.g + ' 🥈' + m.s + ' 🥉' + m.b + ')';
+  }
+  return country.area.toLocaleString() + ' sq mi';
+}
+
+function goToDifficulty() {} // no-op, kept for safety
+
+function goToMode() {
+  document.getElementById('difficulty-screen') && (document.getElementById('difficulty-screen').style.display = 'none');
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'none';
+  document.getElementById('mode-screen').style.display = 'block';
+}
+
+// ── Render GDP proportional bar viz ──
+function renderGDP(bigger, smaller) {
+  const container = document.getElementById('overlap-svg-container');
+  const legend = document.getElementById('overlap-legend');
+  const total = bigger.gdp + smaller.gdp;
+  const bigPct = Math.round(bigger.gdp / total * 100);
+  const smPct = 100 - bigPct;
+
+  function fmt(v) { return v >= 1000 ? '$' + (v/1000).toFixed(1) + 'T' : '$' + v + 'B'; }
+
+  container.innerHTML = `
+    <div class="gdp-viz">
+      <div class="gdp-row">
+        <span class="gdp-flag">${bigger.flag}</span>
+        <div class="gdp-bar-wrap" style="width:100%">
+          <div class="gdp-bar big" style="width:${bigPct}%">
+            <span class="gdp-bar-val">${fmt(bigger.gdp)}</span>
+          </div>
+        </div>
+        <span class="gdp-label" style="width:54px;text-align:left">${bigPct}%</span>
+      </div>
+      <div class="gdp-row">
+        <span class="gdp-flag">${smaller.flag}</span>
+        <div class="gdp-bar-wrap" style="width:100%">
+          <div class="gdp-bar small" style="width:${smPct}%">
+            <span class="gdp-bar-val">${fmt(smaller.gdp)}</span>
+          </div>
+        </div>
+        <span class="gdp-label" style="width:54px;text-align:left">${smPct}%</span>
+      </div>
+      <div style="font-family:'Lato',sans-serif;font-size:0.7rem;color:var(--ink-faint);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-top:0.5rem">Share of combined GDP</div>
+    </div>`;
+
+  legend.innerHTML = `
+    <span><span class="legend-dot" style="background:#1A7A8A"></span>${bigger.flag} ${bigger.name}</span>
+    <span><span class="legend-dot" style="background:#C8732A"></span>${smaller.flag} ${smaller.name}</span>`;
+}
+
+// ── Render Olympics medal podium viz ──
+function renderMedals(bigger, smaller) {
+  const container = document.getElementById('overlap-svg-container');
+  const legend = document.getElementById('overlap-legend');
+
+  const bm = bigger.medals, sm = smaller.medals;
+  const maxVal = Math.max(bm.g, bm.s, bm.b, sm.g, sm.s, sm.b, 1);
+  const BAR_H = 80; // max bar height px
+
+  function barH(v) { return Math.max(2, Math.round(v / maxVal * BAR_H)); }
+
+  function medalBlock(country, colorClass, m) {
+    return `
+      <div class="medals-row">
+        <div class="medals-country-header">
+          <span style="font-size:1.4rem">${country.flag}</span>
+          <span style="font-weight:500;color:var(--ink)">${country.name}</span>
+          <span style="font-size:0.82rem;margin-left:auto;font-family:'Lato',sans-serif;letter-spacing:0.06em">${m.g+m.s+m.b} total</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-end;height:${BAR_H + 24}px">
+          ${['gold','silver','bronze'].map((type,i) => {
+            const v = [m.g, m.s, m.b][i];
+            const emoji = ['🥇','🥈','🥉'][i];
+            const h = barH(v);
+            return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
+              <span style="font-family:'Lato',sans-serif;font-size:0.8rem;color:var(--ink-muted)">${v}</span>
+              <div style="width:100%;height:${h}px;border-radius:3px 3px 0 0;background:${['#C9A84C','#A0A9B8','#A0694A'][i]}"></div>
+              <span style="font-size:1rem">${emoji}</span>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  }
+
+  container.innerHTML = `
+    <div class="medals-viz">
+      ${medalBlock(bigger, 'big', bm)}
+      <hr class="medals-divider">
+      ${medalBlock(smaller, 'small', sm)}
+    </div>`;
+
+  legend.innerHTML = '';
+}
+
+// ── Render population horizontal bar viz ──
+function renderPopulation(bigger, smaller) {
+  const container = document.getElementById('overlap-svg-container');
+  const legend = document.getElementById('overlap-legend');
+  const total = bigger.pop + smaller.pop;
+
+  function fmt(v) {
+    if (v >= 1e9) return (v/1e9).toFixed(2) + 'B';
+    if (v >= 1e6) return (v/1e6).toFixed(1) + 'M';
+    return v.toLocaleString();
+  }
+
+  const bigPct = Math.round(bigger.pop / total * 100);
+  const smPct  = 100 - bigPct;
+
+  container.innerHTML = `
+    <div class="pop-viz">
+      <div class="pop-row">
+        <div class="pop-country-header">
+          <span style="font-size:1.3rem">${bigger.flag}</span>
+          <span style="font-style:italic">${bigger.name}</span>
+        </div>
+        <div class="pop-bar-wrap">
+          <div class="pop-bar-fill big" style="width:${bigPct}%"></div>
+        </div>
+        <div class="pop-bar-val">${fmt(bigger.pop)} people · ${bigPct}% of combined</div>
+      </div>
+      <div class="pop-row">
+        <div class="pop-country-header">
+          <span style="font-size:1.3rem">${smaller.flag}</span>
+          <span style="font-style:italic">${smaller.name}</span>
+        </div>
+        <div class="pop-bar-wrap">
+          <div class="pop-bar-fill small" style="width:${smPct}%"></div>
+        </div>
+        <div class="pop-bar-val">${fmt(smaller.pop)} people · ${smPct}% of combined</div>
+      </div>
+    </div>`;
+
+  legend.innerHTML = '';
+}
 
 // ── Load 50m geo data once ──
 async function loadGeoData() {
@@ -523,11 +830,6 @@ function basePoints() {
   if (max > 1.3) return 8;
   return 13;
 }
-function selectDiff(d, el) {
-  difficulty = d;
-  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-}
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -543,19 +845,19 @@ function pickPair() {
     for (let j = i + 1; j < pool.length; j++) {
       const key = [pool[i].geoName, pool[j].geoName].sort().join('|');
       if (usedPairs.has(key)) continue;
-      const big = Math.max(pool[i].area, pool[j].area);
-      const small = Math.min(pool[i].area, pool[j].area);
+      const big = Math.max(getValue(pool[i]), getValue(pool[j]));
+      const small = Math.min(getValue(pool[i]), getValue(pool[j]));
+      if (small === 0) continue;
       if (big / small >= min && big / small <= max) {
         usedPairs.add(key);
         return [pool[i], pool[j]];
       }
     }
   }
-  // Fallback: any unused pair
   for (let i = 0; i < pool.length; i++) {
     for (let j = i + 1; j < pool.length; j++) {
       const key = [pool[i].geoName, pool[j].geoName].sort().join('|');
-      if (!usedPairs.has(key) && pool[i].area !== pool[j].area) {
+      if (!usedPairs.has(key) && getValue(pool[i]) !== getValue(pool[j])) {
         usedPairs.add(key);
         return [pool[i], pool[j]];
       }
@@ -573,11 +875,19 @@ function renderLives() {
 }
 
 async function startGame() {
+  difficulty = 'easy'; // always start easy, game ramps automatically
   roundNum = 0; totalPoints = 0; streak = 0; lives = MAX_LIVES;
   answered = false; usedPairs = new Set();
-  document.getElementById('difficulty-screen').style.display = 'none';
+  document.getElementById('mode-screen').style.display = 'none';
   document.getElementById('end-screen').style.display = 'none';
   document.getElementById('game-screen').style.display = 'block';
+  const questions = {
+    area:       'Which country covers more square miles?',
+    population: 'Which country has more people?',
+    gdp:        'Which country has the larger economy (GDP)?',
+    medals:     'Which country has won more Olympic medals all time?',
+  };
+  document.getElementById('question-text').textContent = questions[gameMode];
   renderLives();
   await loadGeoData();
   loadRound();
@@ -597,10 +907,10 @@ function loadRound() {
 
   document.getElementById('flag-a').textContent = a.flag;
   document.getElementById('name-a').textContent = a.name;
-  document.getElementById('area-a').textContent = a.area.toLocaleString() + ' sq mi';
+  document.getElementById('area-a').textContent = formatValue(a);
   document.getElementById('flag-b').textContent = b.flag;
   document.getElementById('name-b').textContent = b.name;
-  document.getElementById('area-b').textContent = b.area.toLocaleString() + ' sq mi';
+  document.getElementById('area-b').textContent = formatValue(b);
   document.getElementById('area-a').style.display = 'none';
   document.getElementById('area-b').style.display = 'none';
 
@@ -619,7 +929,7 @@ function answer(choice) {
   answered = true;
 
   const [a, b] = currentPair;
-  const correctChoice = a.area >= b.area ? 0 : 1;
+  const correctChoice = getValue(a) >= getValue(b) ? 0 : 1;
   const isCorrect = choice === correctChoice;
 
   const btnA = document.getElementById('btn-a');
@@ -669,13 +979,11 @@ function answer(choice) {
       "Land of the correct! That's you.",
       "You've clearly spent time with an atlas.",
       "Latitude and longitude of success: right here.",
-      "A+ on the pop geography quiz.",
       "Marco Polo would approve.",
       "You didn't just guess — you knew.",
       "The world makes sense to you. Respect.",
       "Flag it as a win — you earned it.",
       "Sharp as the edge of a relief map.",
-      "You could give a TED talk on this.",
       "Scale: mastered. You: unstoppable.",
       "That answer was absolutely continental.",
       "Orienteering champion spotted.",
@@ -710,9 +1018,8 @@ function answer(choice) {
       "The atlas remains undefeated.",
       "Even satellites get confused sometimes. Probably.",
       "You've been Namibia-solutely stumped.",
-      "That country is larger than it looks on most maps. Blame Mercator.",
+      "Blame Mercator. He started all this confusion.",
       "Size is deceptive. That's literally the point of this game.",
-      "Iceland always surprises people. Wait, was it Iceland?",
       "No shame — borders are blurry at this scale.",
       "The world respectfully disagrees.",
       "A noble guess in the wrong hemisphere.",
@@ -721,13 +1028,11 @@ function answer(choice) {
       "Back to the drawing board. Or the globe.",
       "Exploration requires getting lost sometimes.",
       "This round goes to the map.",
-      "Close enough for a first-time visitor.",
       "Tricky! Size and shape rarely agree.",
       "Not all who wander are correct.",
       "Your cartographic instincts need a tune-up.",
       "Even great explorers needed a second voyage.",
       "The world is bigger than our assumptions.",
-      "You'll get it on the next one. Probably.",
       "A valiant effort in difficult terrain.",
       "The answer was hiding just over that border.",
       "Geography humbles us all. Welcome to the club.",
@@ -738,7 +1043,6 @@ function answer(choice) {
       ? quip
       : quip + ' That\'s all three — game over!';
 
-    // Animate the pip being marked
     const newMistakeIdx = MAX_LIVES - lives - 1;
     const lostPip = document.getElementById(`pip-${newMistakeIdx}`);
     if (lostPip) {
@@ -753,29 +1057,47 @@ function answer(choice) {
   document.getElementById('score-points').textContent = totalPoints;
   document.getElementById('score-streak').textContent = streak;
 
-  const bigger  = a.area >= b.area ? a : b;
-  const smaller = a.area <  b.area ? a : b;
-  const ratio = (bigger.area / smaller.area).toFixed(1);
+  const bigger  = getValue(a) >= getValue(b) ? a : b;
+  const smaller = getValue(a) <  getValue(b) ? a : b;
+  const ratio = (getValue(bigger) / getValue(smaller)).toFixed(1);
+
+  const modeLabels = {
+    area:       { verb: 'is', adj: 'bigger' },
+    population: { verb: 'has', adj: 'more people' },
+    gdp:        { verb: 'has', adj: 'the larger economy' },
+    medals:     { verb: 'has', adj: 'more Olympic medals' },
+  };
+  const { verb, adj } = modeLabels[gameMode];
+
   document.getElementById('result-fact').innerHTML = `
     <div class="result-ratio">
-      <span class="ratio-num">${bigger.name}</span> is ${ratio}× bigger
+      <span class="ratio-num">${bigger.name}</span> ${verb} ${ratio}× ${adj}
     </div>
     <div class="result-countries">
       <div class="result-country">
         <span class="result-country-name is-bigger">${bigger.flag} ${bigger.name}</span>
-        <span class="result-country-area">${bigger.area.toLocaleString()} sq mi</span>
+        <span class="result-country-area">${formatValue(bigger)}</span>
       </div>
       <div class="result-country">
         <span class="result-country-name">${smaller.flag} ${smaller.name}</span>
-        <span class="result-country-area">${smaller.area.toLocaleString()} sq mi</span>
+        <span class="result-country-area">${formatValue(smaller)}</span>
       </div>
     </div>`;
 
   document.getElementById('result-section').style.display = 'block';
-  renderOverlap(bigger, smaller);
+
+  // Mode-specific visualization
+  if (gameMode === 'area') {
+    renderOverlap(bigger, smaller);
+  } else if (gameMode === 'population') {
+    renderPopulation(bigger, smaller);
+  } else if (gameMode === 'gdp') {
+    renderGDP(bigger, smaller);
+  } else if (gameMode === 'medals') {
+    renderMedals(bigger, smaller);
+  }
   roundNum++;
 
-  // If out of lives, change button to show game is ending
   if (lives <= 0) {
     document.getElementById('next-btn').textContent = 'See Final Score';
   } else {
@@ -784,10 +1106,7 @@ function answer(choice) {
 }
 
 function nextRound() {
-  if (lives <= 0) {
-    showEndScreen();
-    return;
-  }
+  if (lives <= 0) { showEndScreen(); return; }
   document.getElementById('result-section').style.display = 'none';
   loadRound();
 }
@@ -797,19 +1116,24 @@ function showEndScreen() {
   document.getElementById('end-screen').style.display = 'block';
   document.getElementById('end-score').textContent = totalPoints;
   const livesLeft = lives <= 0 ? 'ran out of lives' : 'no more rounds';
-  document.getElementById('end-reached').textContent = `Round ${roundNum} · ${getDiffLabel()} · ${livesLeft}`;
-  const g = totalPoints >= 100 ? 'A cartographer of the highest order. The world holds no secrets from you.'
-    : totalPoints >= 60  ? 'Extraordinary geographic instinct — few could match your precision.'
-    : totalPoints >= 35  ? 'A seasoned explorer. The continents yield to your knowledge.'
-    : totalPoints >= 20  ? 'A promising geographer — keep studying the atlas.'
-    : 'The map is vast. Every journey begins with a single step.';
+  const modeLabel = { area:'Land Area', population:'Population', gdp:'GDP', medals:'Olympic Medals' }[gameMode];
+  document.getElementById('end-reached').textContent = `${modeLabel} · Round ${roundNum} · ${getDiffLabel()} · ${lives <= 0 ? 'ran out of lives' : 'no more rounds'}`;
+  const gradesByMode = {
+    area:       ['A cartographer of the highest order.','Extraordinary geographic instinct.','A seasoned explorer.','A promising geographer.','The map is vast. Keep exploring.'],
+    population: ['A demographer of rare distinction.','You know your billions from your millions.','Solid grasp of the world\'s people.','A promising student of demographics.','The census awaits. Keep studying.'],
+    gdp:        ['A world-class economist. Impressive.','You clearly follow global markets.','A solid grasp of the world economy.','Economics 101 would help you here.','The markets are humbling. Keep watching.'],
+    medals:     ['An Olympic historian of rare talent.','You know your podiums well.','A solid Olympic knowledge base.','Keep watching those opening ceremonies.','The medal table has much to teach you.'],
+  };
+  const grades = gradesByMode[gameMode];
+  const g = totalPoints >= 100 ? grades[0] : totalPoints >= 60 ? grades[1] : totalPoints >= 35 ? grades[2] : totalPoints >= 20 ? grades[3] : grades[4];
   document.getElementById('end-grade').textContent = g;
 }
 
 function goToMenu() {
   document.getElementById('end-screen').style.display = 'none';
-  document.getElementById('difficulty-screen').style.display = 'block';
+  document.getElementById('mode-screen').style.display = 'block';
 }
+
 </script>
 </body>
 </html>
