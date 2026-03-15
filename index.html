@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatively Speaking</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Pinyon+Script&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --raw-sienna: #C8732A;
+    --slate-color: #2B3D38;
+    --antwerp-blue: #1A7A8A;
+    --vinaceous-tawny: #C2622B;
+    --parchment: #F5F0E8;
+    --ink: #2B2820;
+    --ink-muted: #6B6358;
+    --ink-faint: #C4BFB4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--parchment);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 3rem 1.5rem 5rem;
+    position: relative;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 28px, rgba(43,40,32,0.018) 28px, rgba(43,40,32,0.018) 29px),
+      repeating-linear-gradient(90deg, transparent, transparent 28px, rgba(43,40,32,0.012) 28px, rgba(43,40,32,0.012) 29px);
+    pointer-events: none; z-index: 0;
+  }
+  .page { position: relative; z-index: 1; width: 100%; max-width: 680px; }
+
+  /* TITLE */
+  .title-block { text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--ink-faint); }
+  .title-script { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(3rem, 9vw, 5.2rem); color: var(--raw-sienna); line-height: 1; letter-spacing: 0.01em; }
+  .title-sub { font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-muted); margin-top: 0.6rem; }
+
+  /* DIFFICULTY */
+  #difficulty-screen { text-align: center; }
+  .screen-label { font-style: italic; font-size: 1.2rem; color: var(--ink-muted); margin-bottom: 2rem; font-weight: 300; }
+  .diff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .diff-btn { background: white; border: 1px solid var(--ink-faint); border-radius: 4px; padding: 1.5rem 0.75rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.2s ease; text-align: center; }
+  .diff-swatch { width: 32px; height: 32px; border-radius: 50%; margin: 0 auto 0.75rem; }
+  .diff-btn.easy .diff-swatch   { background: var(--antwerp-blue); }
+  .diff-btn.medium .diff-swatch { background: var(--raw-sienna); }
+  .diff-btn.hard .diff-swatch   { background: var(--slate-color); }
+  .diff-btn.selected { border-width: 2px; }
+  .diff-btn.easy.selected   { border-color: var(--antwerp-blue); }
+  .diff-btn.medium.selected { border-color: var(--raw-sienna); }
+  .diff-btn.hard.selected   { border-color: var(--slate-color); }
+  .diff-btn:hover:not(.selected) { background: #faf8f4; }
+  .diff-name { font-size: 1.1rem; font-weight: 500; display: block; margin-bottom: 0.25rem; }
+  .diff-desc { font-size: 0.85rem; color: var(--ink-muted); font-style: italic; line-height: 1.4; display: block; }
+
+  /* HUD */
+  .score-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+  .score-pair { display: flex; gap: 1.5rem; }
+  .score-item { text-align: center; }
+  .score-item .num { font-family: 'Pinyon Script', cursive; font-size: 2.2rem; line-height: 1; display: block; }
+  .score-item.points .num { color: var(--raw-sienna); }
+  .score-item.streak .num { color: var(--antwerp-blue); }
+  .score-item .lbl { font-family: 'Lato', sans-serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); }
+  .round-info { text-align: right; }
+  .round-num { font-style: italic; font-size: 1rem; color: var(--ink-muted); display: block; }
+  .diff-badge { font-family: 'Lato', sans-serif; font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); display: block; margin-top: 2px; }
+
+  /* LIVES */
+  .lives-bar {
+    display: flex; align-items: center; justify-content: center;
+    gap: 0.5rem; margin-bottom: 1.5rem;
+  }
+  .lives-label {
+    font-family: 'Lato', sans-serif; font-size: 0.62rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--ink-faint); margin-right: 0.4rem;
+  }
+  .life-pip {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1.5px solid var(--ink-faint);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+    background: transparent;
+    position: relative;
+  }
+  .life-pip::before,
+  .life-pip::after {
+    content: '';
+    position: absolute;
+    width: 10px; height: 1.5px;
+    background: var(--ink-faint);
+    border-radius: 1px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .life-pip::before { transform: rotate(45deg); }
+  .life-pip::after  { transform: rotate(-45deg); }
+  .life-pip.used {
+    border-color: var(--vinaceous-tawny);
+    background: rgba(194,98,43,0.08);
+  }
+  .life-pip.used::before,
+  .life-pip.used::after {
+    background: var(--vinaceous-tawny);
+    opacity: 1;
+  }
+  .life-pip.shake { animation: pip-shake 0.4s ease; }
+  @keyframes pip-shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(3px); }
+  }
+
+  /* QUESTION CARD */
+  .question-card { background: white; border: 1px solid var(--ink-faint); border-radius: 4px; padding: 2.5rem 2rem; }
+  .question-text { text-align: center; font-style: italic; font-size: 1.3rem; font-weight: 300; color: var(--ink-muted); margin-bottom: 2rem; }
+  .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .choice-btn { background: var(--parchment); border: 1.5px solid var(--ink-faint); border-radius: 4px; padding: 1.5rem 1rem; cursor: pointer; font-family: 'Cormorant Garamond', serif; transition: all 0.2s ease; text-align: center; }
+  .choice-btn:hover:not(:disabled) { border-color: var(--raw-sienna); background: white; }
+  .choice-btn:disabled { cursor: default; }
+  .choice-btn.correct { border-color: var(--antwerp-blue); background: rgba(26,122,138,0.07); }
+  .choice-btn.wrong   { border-color: var(--vinaceous-tawny); background: rgba(194,98,43,0.07); }
+  .choice-flag { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .choice-name { font-size: 1.2rem; font-weight: 500; display: block; color: var(--ink); }
+  .choice-area { font-size: 0.95rem; color: var(--ink-muted); font-style: italic; margin-top: 0.35rem; display: none; }
+  .choice-btn.correct .choice-area, .choice-btn.wrong .choice-area { display: block; }
+
+  /* RESULT */
+  .result-section { display: none; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--ink-faint); text-align: center; }
+  .verdict { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 500; font-style: italic; line-height: 1.1; margin-bottom: 0.4rem; }
+  .verdict.correct { color: var(--antwerp-blue); }
+  .verdict.wrong   { color: var(--vinaceous-tawny); }
+  .points-earned { font-family: 'Lato', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1.2rem; }
+  .points-earned .pts-highlight { color: var(--raw-sienna); }
+  .result-fact { font-size: 1.15rem; font-style: italic; color: var(--ink-muted); font-weight: 300; line-height: 1.7; margin-bottom: 1.5rem; max-width: 440px; margin-left: auto; margin-right: auto; }
+  .ornament { text-align: center; color: var(--ink-faint); font-size: 1rem; margin: 1rem 0; letter-spacing: 0.3em; }
+
+  /* OVERLAP */
+  .overlap-section { margin: 1rem 0 2rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+  #overlap-svg-container { width: 100%; max-width: 440px; min-height: 160px; display: flex; align-items: center; justify-content: center; }
+  #overlap-svg-container svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .overlap-loading { font-style: italic; font-size: 0.9rem; color: var(--ink-faint); }
+  .overlap-legend { display: flex; gap: 1.5rem; font-size: 0.95rem; font-style: italic; color: var(--ink-muted); align-items: center; flex-wrap: wrap; justify-content: center; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 5px; vertical-align: middle; }
+
+  /* BUTTONS */
+  .next-btn { background: var(--slate-color); color: var(--parchment); border: none; border-radius: 4px; padding: 0.9rem 2.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; cursor: pointer; letter-spacing: 0.04em; transition: all 0.18s ease; }
+  .next-btn:hover { background: var(--ink); transform: translateY(-1px); }
+  .start-btn { background: var(--raw-sienna); color: white; border: none; border-radius: 4px; padding: 1rem 3rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic; cursor: pointer; transition: all 0.18s ease; }
+  .start-btn:hover { background: var(--vinaceous-tawny); transform: translateY(-1px); }
+
+  /* END SCREEN */
+  #end-screen { display: none; text-align: center; background: white; border: 1px solid var(--ink-faint); border-radius: 4px; padding: 3rem 2rem; }
+  .end-script { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: var(--raw-sienna); line-height: 1; margin-bottom: 0.5rem; }
+  .end-final-label { font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 0.25rem; }
+  .end-score { font-family: 'Pinyon Script', cursive; font-size: 4.5rem; color: var(--slate-color); line-height: 1; margin: 0.25rem 0 0.5rem; }
+  .end-reached { font-size: 0.95rem; font-style: italic; color: var(--ink-muted); margin-bottom: 0.5rem; }
+  .end-grade { font-style: italic; font-size: 1.1rem; color: var(--ink-muted); font-weight: 300; margin-bottom: 2rem; line-height: 1.6; max-width: 380px; margin-left: auto; margin-right: auto; }
+  .replay-btn { background: transparent; color: var(--raw-sienna); border: 1.5px solid var(--raw-sienna); border-radius: 4px; padding: 0.85rem 2rem; font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; cursor: pointer; margin: 0 0.4rem; transition: all 0.18s ease; }
+  .replay-btn:hover { background: rgba(200,115,42,0.08); }
+
+  @media (max-width: 480px) { .choices { grid-template-columns: 1fr; } .diff-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="title-block">
+    <div class="title-script">Relatively Speaking</div>
+    <div class="title-sub">A geography of comparative area</div>
+  </div>
+
+  <!-- DIFFICULTY -->
+  <div id="difficulty-screen">
+    <p class="screen-label">Choose your starting difficulty</p>
+    <div class="diff-grid">
+      <button class="diff-btn easy selected" onclick="selectDiff('easy',this)">
+        <div class="diff-swatch"></div>
+        <span class="diff-name">Easy</span>
+        <span class="diff-desc">Large contrasts to start — builds slowly</span>
+      </button>
+      <button class="diff-btn medium" onclick="selectDiff('medium',this)">
+        <div class="diff-swatch"></div>
+        <span class="diff-name">Medium</span>
+        <span class="diff-desc">Moderate differences — ramps from here</span>
+      </button>
+      <button class="diff-btn hard" onclick="selectDiff('hard',this)">
+        <div class="diff-swatch"></div>
+        <span class="diff-name">Hard</span>
+        <span class="diff-desc">Close matches from the very start</span>
+      </button>
+    </div>
+    <div class="ornament">· · ·</div>
+    <button class="start-btn" onclick="startGame()">Begin the Journey</button>
+  </div>
+
+  <!-- GAME -->
+  <div id="game-screen" style="display:none">
+    <div class="score-bar">
+      <div class="score-pair">
+        <div class="score-item points"><span class="num" id="score-points">0</span><div class="lbl">Points</div></div>
+        <div class="score-item streak"><span class="num" id="score-streak">0</span><div class="lbl">Streak</div></div>
+      </div>
+      <div class="round-info">
+        <span class="round-num" id="round-num">Round 1</span>
+        <span class="diff-badge" id="diff-badge">Easy</span>
+      </div>
+    </div>
+
+    <!-- 3 LIVES -->
+    <div class="lives-bar" id="lives-bar">
+      <span class="lives-label">Wrong guesses</span>
+      <div class="life-pip" id="pip-0"></div>
+      <div class="life-pip" id="pip-1"></div>
+      <div class="life-pip" id="pip-2"></div>
+    </div>
+
+    <div class="question-card">
+      <div class="question-text">Which country covers more square miles?</div>
+      <div class="choices">
+        <button class="choice-btn" id="btn-a" onclick="answer(0)">
+          <span class="choice-flag" id="flag-a">🌍</span>
+          <span class="choice-name" id="name-a">—</span>
+          <div class="choice-area" id="area-a"></div>
+        </button>
+        <button class="choice-btn" id="btn-b" onclick="answer(1)">
+          <span class="choice-flag" id="flag-b">🌎</span>
+          <span class="choice-name" id="name-b">—</span>
+          <div class="choice-area" id="area-b"></div>
+        </button>
+      </div>
+      <div class="result-section" id="result-section">
+        <div class="verdict" id="verdict"></div>
+        <div class="points-earned" id="points-earned"></div>
+        <div class="result-fact" id="result-fact"></div>
+        <div class="ornament">· · ·</div>
+        <div class="overlap-section">
+          <div id="overlap-svg-container"><span class="overlap-loading">Drawing shapes…</span></div>
+          <div class="overlap-legend" id="overlap-legend"></div>
+        </div>
+        <button class="next-btn" id="next-btn" onclick="nextRound()">Continue →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- END -->
+  <div id="end-screen">
+    <div class="end-script">Game Over</div>
+    <div class="end-final-label">Final Score</div>
+    <div class="end-score" id="end-score">0</div>
+    <div class="end-reached" id="end-reached"></div>
+    <div class="end-grade" id="end-grade"></div>
+    <div class="ornament">· · ·</div>
+    <button class="replay-btn" onclick="goToMenu()">Change Difficulty</button>
+    <button class="replay-btn" onclick="startGame()">Play Again</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script>
+// ── Country list — geoName must match properties.name in world-atlas 50m ──
+const COUNTRIES = [
+  { name:"Russia",                   geoName:"Russia",                   flag:"🇷🇺", area:6612100 },
+  { name:"Canada",                   geoName:"Canada",                   flag:"🇨🇦", area:3855100 },
+  { name:"United States",            geoName:"United States of America", flag:"🇺🇸", area:3796742 },
+  { name:"China",                    geoName:"China",                    flag:"🇨🇳", area:3705407 },
+  { name:"Brazil",                   geoName:"Brazil",                   flag:"🇧🇷", area:3287956 },
+  { name:"Australia",                geoName:"Australia",                flag:"🇦🇺", area:2969907 },
+  { name:"India",                    geoName:"India",                    flag:"🇮🇳", area:1269219 },
+  { name:"Argentina",                geoName:"Argentina",                flag:"🇦🇷", area:1073520 },
+  { name:"Kazakhstan",               geoName:"Kazakhstan",               flag:"🇰🇿", area:1052090 },
+  { name:"Algeria",                  geoName:"Algeria",                  flag:"🇩🇿", area:919595  },
+  { name:"DR Congo",                 geoName:"Dem. Rep. Congo",          flag:"🇨🇩", area:905354  },
+  { name:"Saudi Arabia",             geoName:"Saudi Arabia",             flag:"🇸🇦", area:830000  },
+  { name:"Mexico",                   geoName:"Mexico",                   flag:"🇲🇽", area:758449  },
+  { name:"Indonesia",                geoName:"Indonesia",                flag:"🇮🇩", area:735358  },
+  { name:"Sudan",                    geoName:"Sudan",                    flag:"🇸🇩", area:728215  },
+  { name:"Libya",                    geoName:"Libya",                    flag:"🇱🇾", area:679362  },
+  { name:"Iran",                     geoName:"Iran",                     flag:"🇮🇷", area:636372  },
+  { name:"Mongolia",                 geoName:"Mongolia",                 flag:"🇲🇳", area:604829  },
+  { name:"Peru",                     geoName:"Peru",                     flag:"🇵🇪", area:496225  },
+  { name:"Chad",                     geoName:"Chad",                     flag:"🇹🇩", area:495755  },
+  { name:"Niger",                    geoName:"Niger",                    flag:"🇳🇪", area:489191  },
+  { name:"Angola",                   geoName:"Angola",                   flag:"🇦🇴", area:481354  },
+  { name:"Mali",                     geoName:"Mali",                     flag:"🇲🇱", area:478841  },
+  { name:"South Africa",             geoName:"South Africa",             flag:"🇿🇦", area:471011  },
+  { name:"Colombia",                 geoName:"Colombia",                 flag:"🇨🇴", area:440831  },
+  { name:"Ethiopia",                 geoName:"Ethiopia",                 flag:"🇪🇹", area:426373  },
+  { name:"Bolivia",                  geoName:"Bolivia",                  flag:"🇧🇴", area:424164  },
+  { name:"Mauritania",               geoName:"Mauritania",               flag:"🇲🇷", area:397955  },
+  { name:"Egypt",                    geoName:"Egypt",                    flag:"🇪🇬", area:386662  },
+  { name:"Tanzania",                 geoName:"Tanzania",                 flag:"🇹🇿", area:364900  },
+  { name:"Nigeria",                  geoName:"Nigeria",                  flag:"🇳🇬", area:356669  },
+  { name:"Venezuela",                geoName:"Venezuela",                flag:"🇻🇪", area:353841  },
+  { name:"Mozambique",               geoName:"Mozambique",               flag:"🇲🇿", area:309496  },
+  { name:"Pakistan",                 geoName:"Pakistan",                 flag:"🇵🇰", area:340509  },
+  { name:"Turkey",                   geoName:"Turkey",                   flag:"🇹🇷", area:302535  },
+  { name:"Chile",                    geoName:"Chile",                    flag:"🇨🇱", area:291930  },
+  { name:"France",                   geoName:"France",                   flag:"🇫🇷", area:248573  },
+  { name:"Somalia",                  geoName:"Somalia",                  flag:"🇸🇴", area:246201  },
+  { name:"Central African Republic", geoName:"Central African Rep.",     flag:"🇨🇫", area:240535  },
+  { name:"Ukraine",                  geoName:"Ukraine",                  flag:"🇺🇦", area:233062  },
+  { name:"Madagascar",               geoName:"Madagascar",               flag:"🇲🇬", area:226658  },
+  { name:"Botswana",                 geoName:"Botswana",                 flag:"🇧🇼", area:224607  },
+  { name:"Kenya",                    geoName:"Kenya",                    flag:"🇰🇪", area:224081  },
+  { name:"Yemen",                    geoName:"Yemen",                    flag:"🇾🇪", area:203850  },
+  { name:"Thailand",                 geoName:"Thailand",                 flag:"🇹🇭", area:198117  },
+  { name:"Spain",                    geoName:"Spain",                    flag:"🇪🇸", area:195360  },
+  { name:"Cameroon",                 geoName:"Cameroon",                 flag:"🇨🇲", area:183568  },
+  { name:"Papua New Guinea",         geoName:"Papua New Guinea",         flag:"🇵🇬", area:178704  },
+  { name:"Sweden",                   geoName:"Sweden",                   flag:"🇸🇪", area:173860  },
+  { name:"Uzbekistan",               geoName:"Uzbekistan",               flag:"🇺🇿", area:172742  },
+  { name:"Morocco",                  geoName:"Morocco",                  flag:"🇲🇦", area:172414  },
+  { name:"Iraq",                     geoName:"Iraq",                     flag:"🇮🇶", area:169235  },
+  { name:"Paraguay",                 geoName:"Paraguay",                 flag:"🇵🇾", area:157048  },
+  { name:"Zimbabwe",                 geoName:"Zimbabwe",                 flag:"🇿🇼", area:150872  },
+  { name:"Japan",                    geoName:"Japan",                    flag:"🇯🇵", area:145937  },
+  { name:"Germany",                  geoName:"Germany",                  flag:"🇩🇪", area:137988  },
+  { name:"Finland",                  geoName:"Finland",                  flag:"🇫🇮", area:130559  },
+  { name:"Vietnam",                  geoName:"Vietnam",                  flag:"🇻🇳", area:127882  },
+  { name:"Malaysia",                 geoName:"Malaysia",                 flag:"🇲🇾", area:127320  },
+  { name:"Norway",                   geoName:"Norway",                   flag:"🇳🇴", area:125021  },
+  { name:"Poland",                   geoName:"Poland",                   flag:"🇵🇱", area:120728  },
+  { name:"Ivory Coast",              geoName:"Côte d'Ivoire",            flag:"🇨🇮", area:124504  },
+  { name:"Oman",                     geoName:"Oman",                     flag:"🇴🇲", area:119499  },
+  { name:"Italy",                    geoName:"Italy",                    flag:"🇮🇹", area:116348  },
+  { name:"Philippines",              geoName:"Philippines",              flag:"🇵🇭", area:115831  },
+  { name:"Ecuador",                  geoName:"Ecuador",                  flag:"🇪🇨", area:109484  },
+  { name:"Burkina Faso",             geoName:"Burkina Faso",             flag:"🇧🇫", area:105869  },
+  { name:"New Zealand",              geoName:"New Zealand",              flag:"🇳🇿", area:103736  },
+  { name:"Gabon",                    geoName:"Gabon",                    flag:"🇬🇦", area:103347  },
+  { name:"United Kingdom",           geoName:"United Kingdom",           flag:"🇬🇧", area:94058   },
+  { name:"Uganda",                   geoName:"Uganda",                   flag:"🇺🇬", area:93065   },
+  { name:"Ghana",                    geoName:"Ghana",                    flag:"🇬🇭", area:92098   },
+  { name:"Romania",                  geoName:"Romania",                  flag:"🇷🇴", area:91699   },
+  { name:"Laos",                     geoName:"Laos",                     flag:"🇱🇦", area:91429   },
+  { name:"Guinea",                   geoName:"Guinea",                   flag:"🇬🇳", area:94926   },
+  { name:"Belarus",                  geoName:"Belarus",                  flag:"🇧🇾", area:80155   },
+  { name:"Cuba",                     geoName:"Cuba",                     flag:"🇨🇺", area:42804   },
+  { name:"South Korea",              geoName:"South Korea",              flag:"🇰🇷", area:38622   },
+  { name:"Iceland",                  geoName:"Iceland",                  flag:"🇮🇸", area:39769   },
+  { name:"Hungary",                  geoName:"Hungary",                  flag:"🇭🇺", area:35919   },
+  { name:"Portugal",                 geoName:"Portugal",                 flag:"🇵🇹", area:35556   },
+  { name:"Jordan",                   geoName:"Jordan",                   flag:"🇯🇴", area:34495   },
+  { name:"Austria",                  geoName:"Austria",                  flag:"🇦🇹", area:32383   },
+  { name:"UAE",                      geoName:"United Arab Emirates",     flag:"🇦🇪", area:32278   },
+  { name:"Czech Republic",           geoName:"Czechia",                  flag:"🇨🇿", area:30450   },
+  { name:"Ireland",                  geoName:"Ireland",                  flag:"🇮🇪", area:27133   },
+  { name:"Georgia",                  geoName:"Georgia",                  flag:"🇬🇪", area:26911   },
+  { name:"Sri Lanka",                geoName:"Sri Lanka",                flag:"🇱🇰", area:25332   },
+  { name:"Lithuania",                geoName:"Lithuania",                flag:"🇱🇹", area:25212   },
+  { name:"Latvia",                   geoName:"Latvia",                   flag:"🇱🇻", area:24938   },
+  { name:"Croatia",                  geoName:"Croatia",                  flag:"🇭🇷", area:21851   },
+  { name:"Bosnia",                   geoName:"Bosnia and Herz.",         flag:"🇧🇦", area:19767   },
+  { name:"Estonia",                  geoName:"Estonia",                  flag:"🇪🇪", area:17462   },
+  { name:"Denmark",                  geoName:"Denmark",                  flag:"🇩🇰", area:16639   },
+  { name:"Netherlands",              geoName:"Netherlands",              flag:"🇳🇱", area:16040   },
+  { name:"Switzerland",              geoName:"Switzerland",              flag:"🇨🇭", area:15940   },
+  { name:"Taiwan",                   geoName:"Taiwan",                   flag:"🇹🇼", area:13974   },
+  { name:"Moldova",                  geoName:"Moldova",                  flag:"🇲🇩", area:13070   },
+  { name:"Belgium",                  geoName:"Belgium",                  flag:"🇧🇪", area:11787   },
+  { name:"Albania",                  geoName:"Albania",                  flag:"🇦🇱", area:11100   },
+  { name:"Israel",                   geoName:"Israel",                   flag:"🇮🇱", area:8019    },
+  { name:"Lebanon",                  geoName:"Lebanon",                  flag:"🇱🇧", area:4036    },
+  { name:"Qatar",                    geoName:"Qatar",                    flag:"🇶🇦", area:4473    },
+  { name:"Jamaica",                  geoName:"Jamaica",                  flag:"🇯🇲", area:4244    },
+  { name:"Cyprus",                   geoName:"Cyprus",                   flag:"🇨🇾", area:3572    },
+  { name:"Luxembourg",               geoName:"Luxembourg",               flag:"🇱🇺", area:999     },
+  { name:"Singapore",                geoName:"Singapore",                flag:"🇸🇬", area:281     }
+];
+
+// ── Progressive difficulty ──
+const DIFF_START_MAX = { easy: 5.0, medium: 3.0, hard: 1.6 };
+const TIGHTEN = 0.055;
+const FLOOR_RATIO = 1.04;
+const MAX_LIVES = 3;
+
+let difficulty = 'easy';
+let roundNum = 0, totalPoints = 0, streak = 0, lives = MAX_LIVES;
+let answered = false, currentPair = null, usedPairs = new Set();
+let geoFeatures = null; // Map: geoName -> GeoJSON feature
+
+// ── Load 50m geo data once ──
+async function loadGeoData() {
+  if (geoFeatures) return;
+  try {
+    const topo = await d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json");
+    const features = topojson.feature(topo, topo.objects.countries).features;
+    geoFeatures = new Map();
+    features.forEach(f => {
+      if (f.properties && f.properties.name) {
+        geoFeatures.set(f.properties.name, f);
+      }
+    });
+  } catch(e) {
+    console.error("Geo load failed", e);
+    geoFeatures = new Map();
+  }
+}
+
+// ── Render real country outlines ──
+function renderOverlap(bigger, smaller) {
+  const container = document.getElementById('overlap-svg-container');
+  container.innerHTML = '<span class="overlap-loading">Drawing shapes…</span>';
+  document.getElementById('overlap-legend').innerHTML = '';
+
+  const bigFeat = geoFeatures.get(bigger.geoName);
+  const smFeat  = geoFeatures.get(smaller.geoName);
+
+  if (!bigFeat || !smFeat) {
+    container.innerHTML = `<span class="overlap-loading">Shape unavailable for ${!bigFeat ? bigger.name : smaller.name}</span>`;
+    return;
+  }
+
+  const W = 440, H = 230;
+
+  // Use an equal-area projection (Albers) for honest area comparison
+  // Fit bigger country to a max box of MAX_DIM, preserving actual shape
+  const MAX_DIM = 150;
+
+  // Project bigger to fill MAX_DIM
+  const bigProj = d3.geoEqualEarth().fitSize([MAX_DIM, MAX_DIM], bigFeat);
+  const bigPath = d3.geoPath().projection(bigProj);
+  const bigD    = bigPath(bigFeat);
+  const [[bx0,by0],[bx1,by1]] = bigPath.bounds(bigFeat);
+  const bigW = bx1 - bx0, bigH = by1 - by0;
+
+  // Scale smaller proportionally by sqrt(area ratio) — applied to the linear projection scale
+  const linearScale = Math.sqrt(smaller.area / bigger.area);
+
+  // Fit smaller into target dimensions scaled from bigger's actual rendered size
+  const smTargetW = bigW * linearScale;
+  const smTargetH = bigH * linearScale;
+  const smProj = d3.geoEqualEarth().fitSize([smTargetW, smTargetH], smFeat);
+  const smPath = d3.geoPath().projection(smProj);
+  const smD    = smPath(smFeat);
+  const [[sx0,sy0],[sx1,sy1]] = smPath.bounds(smFeat);
+  const smW = sx1 - sx0, smH = sy1 - sy0;
+
+  // Center both shapes in the SVG canvas
+  const cx = W / 2, cy = H / 2;
+  const bigTX = cx - (bx0 + bigW / 2);
+  const bigTY = cy - (by0 + bigH / 2);
+  const smTX  = cx - (sx0 + smW / 2);
+  const smTY  = cy - (sy0 + smH / 2);
+
+  container.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(${bigTX.toFixed(1)},${bigTY.toFixed(1)})">
+        <path d="${bigD}"
+          fill="rgba(26,122,138,0.38)"
+          stroke="#1A7A8A"
+          stroke-width="0.8"
+          stroke-linejoin="round"
+        />
+      </g>
+      <g transform="translate(${smTX.toFixed(1)},${smTY.toFixed(1)})">
+        <path d="${smD}"
+          fill="rgba(200,115,42,0.52)"
+          stroke="#C8732A"
+          stroke-width="1.0"
+          stroke-linejoin="round"
+        />
+      </g>
+    </svg>`;
+
+  document.getElementById('overlap-legend').innerHTML = `
+    <span><span class="legend-dot" style="background:#1A7A8A"></span>${bigger.flag} ${bigger.name}</span>
+    <span><span class="legend-dot" style="background:#C8732A"></span>${smaller.flag} ${smaller.name}</span>`;
+}
+
+// ── Game logic ──
+function getRatioWindow() {
+  const startMax = DIFF_START_MAX[difficulty];
+  const currentMax = Math.max(FLOOR_RATIO + 0.25, startMax - roundNum * TIGHTEN);
+  const currentMin = Math.max(FLOOR_RATIO, currentMax - 1.8);
+  return { min: currentMin, max: currentMax };
+}
+function getDiffLabel() {
+  const { max } = getRatioWindow();
+  if (max > 4.0) return 'Very Easy';
+  if (max > 3.0) return 'Easy';
+  if (max > 2.2) return 'Moderate';
+  if (max > 1.7) return 'Challenging';
+  if (max > 1.3) return 'Hard';
+  return 'Expert';
+}
+function basePoints() {
+  const { max } = getRatioWindow();
+  if (max > 4.0) return 1;
+  if (max > 3.0) return 2;
+  if (max > 2.2) return 3;
+  if (max > 1.7) return 5;
+  if (max > 1.3) return 8;
+  return 13;
+}
+function selectDiff(d, el) {
+  difficulty = d;
+  document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function pickPair() {
+  const { min, max } = getRatioWindow();
+  const pool = shuffle(COUNTRIES);
+  for (let i = 0; i < pool.length; i++) {
+    for (let j = i + 1; j < pool.length; j++) {
+      const key = [pool[i].geoName, pool[j].geoName].sort().join('|');
+      if (usedPairs.has(key)) continue;
+      const big = Math.max(pool[i].area, pool[j].area);
+      const small = Math.min(pool[i].area, pool[j].area);
+      if (big / small >= min && big / small <= max) {
+        usedPairs.add(key);
+        return [pool[i], pool[j]];
+      }
+    }
+  }
+  // Fallback: any unused pair
+  for (let i = 0; i < pool.length; i++) {
+    for (let j = i + 1; j < pool.length; j++) {
+      const key = [pool[i].geoName, pool[j].geoName].sort().join('|');
+      if (!usedPairs.has(key) && pool[i].area !== pool[j].area) {
+        usedPairs.add(key);
+        return [pool[i], pool[j]];
+      }
+    }
+  }
+  return null;
+}
+
+function renderLives() {
+  const mistakes = MAX_LIVES - lives;
+  for (let i = 0; i < MAX_LIVES; i++) {
+    const pip = document.getElementById(`pip-${i}`);
+    pip.className = 'life-pip' + (i < mistakes ? ' used' : '');
+  }
+}
+
+async function startGame() {
+  roundNum = 0; totalPoints = 0; streak = 0; lives = MAX_LIVES;
+  answered = false; usedPairs = new Set();
+  document.getElementById('difficulty-screen').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'none';
+  document.getElementById('game-screen').style.display = 'block';
+  renderLives();
+  await loadGeoData();
+  loadRound();
+}
+
+function loadRound() {
+  answered = false;
+  const pair = pickPair();
+  if (!pair) { showEndScreen(); return; }
+  currentPair = pair;
+  const [a, b] = currentPair;
+
+  document.getElementById('round-num').textContent = `Round ${roundNum + 1}`;
+  document.getElementById('diff-badge').textContent = getDiffLabel();
+  document.getElementById('score-points').textContent = totalPoints;
+  document.getElementById('score-streak').textContent = streak;
+
+  document.getElementById('flag-a').textContent = a.flag;
+  document.getElementById('name-a').textContent = a.name;
+  document.getElementById('area-a').textContent = a.area.toLocaleString() + ' sq mi';
+  document.getElementById('flag-b').textContent = b.flag;
+  document.getElementById('name-b').textContent = b.name;
+  document.getElementById('area-b').textContent = b.area.toLocaleString() + ' sq mi';
+  document.getElementById('area-a').style.display = 'none';
+  document.getElementById('area-b').style.display = 'none';
+
+  const btnA = document.getElementById('btn-a');
+  const btnB = document.getElementById('btn-b');
+  btnA.className = 'choice-btn'; btnB.className = 'choice-btn';
+  btnA.disabled = false; btnB.disabled = false;
+
+  document.getElementById('result-section').style.display = 'none';
+  document.getElementById('overlap-svg-container').innerHTML = '';
+  document.getElementById('overlap-legend').innerHTML = '';
+}
+
+function answer(choice) {
+  if (answered) return;
+  answered = true;
+
+  const [a, b] = currentPair;
+  const correctChoice = a.area >= b.area ? 0 : 1;
+  const isCorrect = choice === correctChoice;
+
+  const btnA = document.getElementById('btn-a');
+  const btnB = document.getElementById('btn-b');
+  btnA.disabled = true; btnB.disabled = true;
+  document.getElementById('area-a').style.display = 'block';
+  document.getElementById('area-b').style.display = 'block';
+
+  (choice === 0 ? btnA : btnB).classList.add(isCorrect ? 'correct' : 'wrong');
+  (choice === 0 ? btnB : btnA).classList.add(isCorrect ? 'wrong' : 'correct');
+
+  const verdict = document.getElementById('verdict');
+  const peEl = document.getElementById('points-earned');
+
+  if (isCorrect) {
+    streak++;
+    const base = basePoints();
+    const bonus = streak > 1 ? Math.floor(streak / 2) : 0;
+    const pts = base + bonus;
+    totalPoints += pts;
+    verdict.textContent = 'Correct!';
+    verdict.className = 'verdict correct';
+    peEl.innerHTML = `<span class="pts-highlight">+${pts} point${pts !== 1 ? 's' : ''}</span>` + (bonus > 0 ? ` · streak bonus +${bonus}` : '');
+  } else {
+    lives--;
+    streak = 0;
+    verdict.textContent = 'Not quite…';
+    verdict.className = 'verdict wrong';
+    const remaining = lives;
+    peEl.innerHTML = remaining > 0
+      ? `No points — ${remaining} life${remaining !== 1 ? 's' : ''} remaining`
+      : 'No lives remaining — game over!';
+
+    // Animate the pip being marked
+    const newMistakeIdx = MAX_LIVES - lives - 1;
+    const lostPip = document.getElementById(`pip-${newMistakeIdx}`);
+    if (lostPip) {
+      lostPip.classList.add('shake');
+      setTimeout(() => {
+        lostPip.classList.remove('shake');
+        lostPip.classList.add('used');
+      }, 400);
+    }
+  }
+
+  document.getElementById('score-points').textContent = totalPoints;
+  document.getElementById('score-streak').textContent = streak;
+
+  const bigger  = a.area >= b.area ? a : b;
+  const smaller = a.area <  b.area ? a : b;
+  const ratio = (bigger.area / smaller.area).toFixed(1);
+  document.getElementById('result-fact').textContent =
+    `${bigger.flag} ${bigger.name} (${bigger.area.toLocaleString()} sq mi) is ${ratio}× larger than ${smaller.flag} ${smaller.name} (${smaller.area.toLocaleString()} sq mi).`;
+
+  document.getElementById('result-section').style.display = 'block';
+  renderOverlap(bigger, smaller);
+  roundNum++;
+
+  // If out of lives, change button to show game is ending
+  if (lives <= 0) {
+    document.getElementById('next-btn').textContent = 'See Final Score';
+  } else {
+    document.getElementById('next-btn').textContent = 'Continue →';
+  }
+}
+
+function nextRound() {
+  if (lives <= 0) {
+    showEndScreen();
+    return;
+  }
+  document.getElementById('result-section').style.display = 'none';
+  loadRound();
+}
+
+function showEndScreen() {
+  document.getElementById('game-screen').style.display = 'none';
+  document.getElementById('end-screen').style.display = 'block';
+  document.getElementById('end-score').textContent = totalPoints;
+  const livesLeft = lives <= 0 ? 'ran out of lives' : 'no more rounds';
+  document.getElementById('end-reached').textContent = `Round ${roundNum} · ${getDiffLabel()} · ${livesLeft}`;
+  const g = totalPoints >= 100 ? 'A cartographer of the highest order. The world holds no secrets from you.'
+    : totalPoints >= 60  ? 'Extraordinary geographic instinct — few could match your precision.'
+    : totalPoints >= 35  ? 'A seasoned explorer. The continents yield to your knowledge.'
+    : totalPoints >= 20  ? 'A promising geographer — keep studying the atlas.'
+    : 'The map is vast. Every journey begins with a single step.';
+  document.getElementById('end-grade').textContent = g;
+}
+
+function goToMenu() {
+  document.getElementById('end-screen').style.display = 'none';
+  document.getElementById('difficulty-screen').style.display = 'block';
+}
+</script>
+</body>
+</html>
