@@ -403,7 +403,7 @@ const COUNTRIES = [
 
 // ── Progressive difficulty ──
 const DIFF_START_MAX = { easy: 5.0, medium: 3.0, hard: 1.6 };
-const TIGHTEN = 0.055;
+const TIGHTEN = 0.02;
 const FLOOR_RATIO = 1.04;
 const MAX_LIVES = 3;
 
@@ -657,6 +657,32 @@ function answer(choice) {
       "Your inner explorer is showing.",
       "Bold move. Bold correct move.",
       "Even Mercator would be impressed.",
+      "Finland-ly, someone who knows their stuff!",
+      "You're not just a pretty face on a passport.",
+      "The globe tipped its hat to you just now.",
+      "Nairobi close — you were exactly right!",
+      "That's a territorial win if ever I saw one.",
+      "Asia how you knew that? Impressive.",
+      "Well-placed answer. Bordering on genius.",
+      "Your internal compass is finely calibrated.",
+      "The continents are impressed. All seven of them.",
+      "Land of the correct! That's you.",
+      "You've clearly spent time with an atlas.",
+      "Latitude and longitude of success: right here.",
+      "A+ on the pop geography quiz.",
+      "Marco Polo would approve.",
+      "You didn't just guess — you knew.",
+      "The world makes sense to you. Respect.",
+      "Flag it as a win — you earned it.",
+      "Sharp as the edge of a relief map.",
+      "You could give a TED talk on this.",
+      "Scale: mastered. You: unstoppable.",
+      "That answer was absolutely continental.",
+      "Orienteering champion spotted.",
+      "No borders on your knowledge base.",
+      "Your geography teacher would be delighted.",
+      "Capital performance. Truly.",
+      "The meridian of excellence runs right through you.",
     ];
     peEl.innerHTML = correctQuips[Math.floor(Math.random() * correctQuips.length)];
   } else {
@@ -676,13 +702,41 @@ function answer(choice) {
       "Tough one! The world is full of surprises.",
       "Wrong turn taken. Recalculating…",
       "Not every explorer finds gold on the first try.",
-      "The earth is round — there are no wrong directions, just wrong answers.",
+      "The earth is round — but that answer was flat wrong.",
+      "Somewhere, a geography teacher just winced.",
+      "It's a big world. Easy to get turned around.",
+      "That one slipped through the continental shelf.",
+      "Don't feel bad — countries are tricky like that.",
+      "The atlas remains undefeated.",
+      "Even satellites get confused sometimes. Probably.",
+      "You've been Namibia-solutely stumped.",
+      "That country is larger than it looks on most maps. Blame Mercator.",
+      "Size is deceptive. That's literally the point of this game.",
+      "Iceland always surprises people. Wait, was it Iceland?",
+      "No shame — borders are blurry at this scale.",
+      "The world respectfully disagrees.",
+      "A noble guess in the wrong hemisphere.",
+      "Your expedition took a wrong turn.",
+      "The coordinates were off on that one.",
+      "Back to the drawing board. Or the globe.",
+      "Exploration requires getting lost sometimes.",
+      "This round goes to the map.",
+      "Close enough for a first-time visitor.",
+      "Tricky! Size and shape rarely agree.",
+      "Not all who wander are correct.",
+      "Your cartographic instincts need a tune-up.",
+      "Even great explorers needed a second voyage.",
+      "The world is bigger than our assumptions.",
+      "You'll get it on the next one. Probably.",
+      "A valiant effort in difficult terrain.",
+      "The answer was hiding just over that border.",
+      "Geography humbles us all. Welcome to the club.",
     ];
     const remaining = lives;
     const quip = wrongQuips[Math.floor(Math.random() * wrongQuips.length)];
     peEl.innerHTML = remaining > 0
       ? quip
-      : quip + ' — and that\'s your last guess!';
+      : quip + ' That\'s all three — game over!';
 
     // Animate the pip being marked
     const newMistakeIdx = MAX_LIVES - lives - 1;
