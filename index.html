@@ -191,40 +191,40 @@
   .mode-name { font-size: 1.3rem; font-weight: 500; display: block; margin-bottom: 0.3rem; color: var(--ink); }
   .mode-desc { font-size: 0.9rem; color: var(--ink-muted); font-style: italic; line-height: 1.5; display: block; }
 
-  /* GDP VIZ */
-  .gdp-viz { width: 100%; max-width: 420px; margin: 0 auto; }
-  .gdp-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem; }
-  .gdp-label { width: 110px; text-align: right; font-size: 0.9rem; font-style: italic; color: var(--ink-muted); flex-shrink: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .gdp-bar-wrap { flex: 1; height: 28px; background: rgba(43,40,32,0.06); border-radius: 3px; overflow: hidden; }
-  .gdp-bar { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); display: flex; align-items: center; padding-left: 8px; }
-  .gdp-bar.big  { background: rgba(26,122,138,0.7); }
-  .gdp-bar.small { background: rgba(200,115,42,0.65); }
-  .gdp-bar-val { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.06em; color: white; white-space: nowrap; }
-  .gdp-flag { font-size: 1.3rem; flex-shrink: 0; }
+  /* GDP VIZ — split dollar coin */
+  .gdp-viz { width: 100%; max-width: 400px; margin: 0 auto; text-align: center; }
+  .gdp-coin-wrap { position: relative; width: 200px; height: 200px; margin: 0 auto 1.2rem; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 3px var(--ink-faint); }
+  .gdp-coin-big  { position: absolute; inset: 0; background: rgba(26,122,138,0.55); }
+  .gdp-coin-small { position: absolute; bottom: 0; right: 0; background: rgba(200,115,42,0.65); border-radius: 50%; transform-origin: bottom right; }
+  .gdp-coin-label { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
+  .gdp-coin-pct { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 500; font-style: italic; line-height: 1; }
+  .gdp-coin-pct.big  { color: #0d4f57; }
+  .gdp-coin-pct.small { color: #7a3810; }
+  .gdp-rows { display: flex; justify-content: center; gap: 2rem; margin-top: 0.5rem; }
+  .gdp-entry { text-align: center; }
+  .gdp-entry-flag { font-size: 1.5rem; display: block; }
+  .gdp-entry-name { font-size: 0.9rem; font-style: italic; color: var(--ink-muted); display: block; }
+  .gdp-entry-val { font-family: 'Lato', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); display: block; margin-top: 2px; }
 
   /* MEDALS VIZ */
   .medals-viz { width: 100%; max-width: 420px; margin: 0 auto; }
   .medals-row { margin-bottom: 1.2rem; }
   .medals-country-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; font-style: italic; font-size: 1rem; color: var(--ink-muted); }
-  .medals-bars { display: flex; gap: 6px; height: 36px; }
-  .medal-bar-group { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
-  .medal-bar-fill { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.7s cubic-bezier(0.4,0,0.2,1); min-height: 2px; }
-  .medal-bar-fill.gold   { background: #C9A84C; }
-  .medal-bar-fill.silver { background: #A0A9B8; }
-  .medal-bar-fill.bronze { background: #A0694A; }
-  .medal-bar-label { font-family: 'Lato', sans-serif; font-size: 0.65rem; letter-spacing: 0.08em; color: var(--ink-faint); text-transform: uppercase; }
-  .medals-total { font-family: 'Lato', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-top: 4px; text-align: center; }
+  .medals-total-big { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 500; color: var(--ink); margin-left: auto; line-height: 1; }
+  .medals-total-big span { font-family: 'Lato', sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); display: block; text-align: right; margin-top: 1px; }
   .medals-divider { border: none; border-top: 1px solid var(--ink-faint); margin: 0.5rem 0 1rem; }
 
-  /* POPULATION viz — simple proportional person-grid */
+  /* POPULATION VIZ — person icon grid */
   .pop-viz { width: 100%; max-width: 420px; margin: 0 auto; }
-  .pop-row { margin-bottom: 1rem; }
-  .pop-country-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; font-style: italic; font-size: 1rem; color: var(--ink-muted); }
-  .pop-bar-wrap { height: 22px; border-radius: 3px; overflow: hidden; background: rgba(43,40,32,0.06); }
-  .pop-bar-fill { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-  .pop-bar-fill.big   { background: rgba(26,122,138,0.65); }
-  .pop-bar-fill.small { background: rgba(200,115,42,0.6); }
-  .pop-bar-val { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.06em; color: var(--ink-muted); margin-top: 3px; }
+  .pop-row { margin-bottom: 1.4rem; }
+  .pop-country-header { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 0.6rem; }
+  .pop-pct-big { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 500; line-height: 1; }
+  .pop-pct-big.big   { color: #1A7A8A; }
+  .pop-pct-big.small { color: #C8732A; }
+  .pop-country-name { font-size: 1rem; font-style: italic; color: var(--ink-muted); }
+  .pop-icons { display: flex; flex-wrap: wrap; gap: 3px; margin-bottom: 0.3rem; }
+  .pop-person { width: 28px; height: 36px; flex-shrink: 0; }
+  .pop-val { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); }
 
   @media (max-width: 480px) { .choices { grid-template-columns: 1fr; } .diff-grid { grid-template-columns: 1fr; } .mode-grid { grid-template-columns: 1fr; } }
 </style>
@@ -497,42 +497,65 @@ function goToMode() {
   document.getElementById('mode-screen').style.display = 'block';
 }
 
-// ── Render GDP proportional bar viz ──
+// ── Render GDP coin split viz ──
 function renderGDP(bigger, smaller) {
   const container = document.getElementById('overlap-svg-container');
   const legend = document.getElementById('overlap-legend');
   const total = bigger.gdp + smaller.gdp;
   const bigPct = Math.round(bigger.gdp / total * 100);
-  const smPct = 100 - bigPct;
+  const smPct  = 100 - bigPct;
 
   function fmt(v) { return v >= 1000 ? '$' + (v/1000).toFixed(1) + 'T' : '$' + v + 'B'; }
 
+  // SVG pie: bigger = teal slice, smaller = sienna slice
+  // Draw as a proper SVG arc
+  const R = 90, cx = 100, cy = 100;
+  const bigAngle = (bigPct / 100) * 360;
+  const rad = (deg) => (deg - 90) * Math.PI / 180;
+  const x1 = cx + R * Math.cos(rad(0));
+  const y1 = cy + R * Math.sin(rad(0));
+  const x2 = cx + R * Math.cos(rad(bigAngle));
+  const y2 = cy + R * Math.sin(rad(bigAngle));
+  const largeArc = bigAngle > 180 ? 1 : 0;
+
+  const bigSlice  = `M ${cx},${cy} L ${x1},${y1} A ${R},${R} 0 ${largeArc},1 ${x2},${y2} Z`;
+  const smLargeArc = bigAngle > 180 ? 0 : 1;
+  const smallSlice = `M ${cx},${cy} L ${x2},${y2} A ${R},${R} 0 ${smLargeArc},1 ${x1},${y1} Z`;
+
+  // Label positions — midpoint of each arc
+  const bigMid = rad(bigAngle / 2);
+  const smMid  = rad(bigAngle + (360 - bigAngle) / 2);
+  const lR = R * 0.62;
+  const bigLX = cx + lR * Math.cos(bigMid);
+  const bigLY = cy + lR * Math.sin(bigMid);
+  const smLX  = cx + lR * Math.cos(smMid);
+  const smLY  = cy + lR * Math.sin(smMid);
+
   container.innerHTML = `
-    <div class="gdp-viz">
-      <div class="gdp-row">
-        <span class="gdp-flag">${bigger.flag}</span>
-        <div class="gdp-bar-wrap" style="width:100%">
-          <div class="gdp-bar big" style="width:${bigPct}%">
-            <span class="gdp-bar-val">${fmt(bigger.gdp)}</span>
-          </div>
+    <div style="text-align:center;width:100%;max-width:400px;margin:0 auto">
+      <svg viewBox="0 0 200 200" style="width:180px;height:180px;display:block;margin:0 auto 1rem">
+        <circle cx="${cx}" cy="${cy}" r="${R}" fill="var(--ink-faint)" opacity="0.2"/>
+        <path d="${bigSlice}"  fill="rgba(26,122,138,0.75)" />
+        <path d="${smallSlice}" fill="rgba(200,115,42,0.75)" />
+        <circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="white" stroke-width="1.5" opacity="0.4"/>
+        ${bigPct > 8  ? `<text x="${bigLX.toFixed(1)}" y="${(bigLY+5).toFixed(1)}" text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="18" font-style="italic" fill="white" opacity="0.95">${bigPct}%</text>` : ''}
+        ${smPct > 8   ? `<text x="${smLX.toFixed(1)}"  y="${(smLY+5).toFixed(1)}"  text-anchor="middle" font-family="Cormorant Garamond,serif" font-size="18" font-style="italic" fill="white" opacity="0.95">${smPct}%</text>` : ''}
+      </svg>
+      <div style="display:flex;justify-content:center;gap:2rem">
+        <div style="text-align:center">
+          <span style="font-size:1.5rem">${bigger.flag}</span>
+          <span style="display:block;font-style:italic;font-size:0.9rem;color:var(--ink-muted)">${bigger.name}</span>
+          <span style="display:block;font-family:'Lato',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#1A7A8A;margin-top:2px">${fmt(bigger.gdp)}</span>
         </div>
-        <span class="gdp-label" style="width:54px;text-align:left">${bigPct}%</span>
-      </div>
-      <div class="gdp-row">
-        <span class="gdp-flag">${smaller.flag}</span>
-        <div class="gdp-bar-wrap" style="width:100%">
-          <div class="gdp-bar small" style="width:${smPct}%">
-            <span class="gdp-bar-val">${fmt(smaller.gdp)}</span>
-          </div>
+        <div style="text-align:center">
+          <span style="font-size:1.5rem">${smaller.flag}</span>
+          <span style="display:block;font-style:italic;font-size:0.9rem;color:var(--ink-muted)">${smaller.name}</span>
+          <span style="display:block;font-family:'Lato',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#C8732A;margin-top:2px">${fmt(smaller.gdp)}</span>
         </div>
-        <span class="gdp-label" style="width:54px;text-align:left">${smPct}%</span>
       </div>
-      <div style="font-family:'Lato',sans-serif;font-size:0.7rem;color:var(--ink-faint);letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-top:0.5rem">Share of combined GDP</div>
     </div>`;
 
-  legend.innerHTML = `
-    <span><span class="legend-dot" style="background:#1A7A8A"></span>${bigger.flag} ${bigger.name}</span>
-    <span><span class="legend-dot" style="background:#C8732A"></span>${smaller.flag} ${smaller.name}</span>`;
+  legend.innerHTML = '';
 }
 
 // ── Render Olympics medal podium viz ──
@@ -542,27 +565,31 @@ function renderMedals(bigger, smaller) {
 
   const bm = bigger.medals, sm = smaller.medals;
   const maxVal = Math.max(bm.g, bm.s, bm.b, sm.g, sm.s, sm.b, 1);
-  const BAR_H = 80; // max bar height px
+  const BAR_H = 80;
 
   function barH(v) { return Math.max(2, Math.round(v / maxVal * BAR_H)); }
 
-  function medalBlock(country, colorClass, m) {
+  function medalBlock(country, m) {
+    const total = m.g + m.s + m.b;
     return `
       <div class="medals-row">
         <div class="medals-country-header">
           <span style="font-size:1.4rem">${country.flag}</span>
-          <span style="font-weight:500;color:var(--ink)">${country.name}</span>
-          <span style="font-size:0.82rem;margin-left:auto;font-family:'Lato',sans-serif;letter-spacing:0.06em">${m.g+m.s+m.b} total</span>
+          <span style="font-weight:500;color:var(--ink);font-size:1.05rem">${country.name}</span>
+          <div class="medals-total-big">
+            ${total}
+            <span>total medals</span>
+          </div>
         </div>
-        <div style="display:flex;gap:8px;align-items:flex-end;height:${BAR_H + 24}px">
+        <div style="display:flex;gap:8px;align-items:flex-end;height:${BAR_H + 28}px">
           ${['gold','silver','bronze'].map((type,i) => {
             const v = [m.g, m.s, m.b][i];
             const emoji = ['🥇','🥈','🥉'][i];
             const h = barH(v);
             return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;flex:1">
-              <span style="font-family:'Lato',sans-serif;font-size:0.8rem;color:var(--ink-muted)">${v}</span>
+              <span style="font-family:'Lato',sans-serif;font-size:0.85rem;font-weight:400;color:var(--ink-muted)">${v}</span>
               <div style="width:100%;height:${h}px;border-radius:3px 3px 0 0;background:${['#C9A84C','#A0A9B8','#A0694A'][i]}"></div>
-              <span style="font-size:1rem">${emoji}</span>
+              <span style="font-size:1.1rem">${emoji}</span>
             </div>`;
           }).join('')}
         </div>
@@ -571,15 +598,15 @@ function renderMedals(bigger, smaller) {
 
   container.innerHTML = `
     <div class="medals-viz">
-      ${medalBlock(bigger, 'big', bm)}
+      ${medalBlock(bigger, bm)}
       <hr class="medals-divider">
-      ${medalBlock(smaller, 'small', sm)}
+      ${medalBlock(smaller, sm)}
     </div>`;
 
   legend.innerHTML = '';
 }
 
-// ── Render population horizontal bar viz ──
+// ── Render population person-icon infographic ──
 function renderPopulation(bigger, smaller) {
   const container = document.getElementById('overlap-svg-container');
   const legend = document.getElementById('overlap-legend');
@@ -591,30 +618,48 @@ function renderPopulation(bigger, smaller) {
     return v.toLocaleString();
   }
 
-  const bigPct = Math.round(bigger.pop / total * 100);
-  const smPct  = 100 - bigPct;
+  // Scale to 20 icons total; each icon = 5% of combined
+  const ICONS = 20;
+  const bigIcons = Math.max(1, Math.round(bigger.pop / total * ICONS));
+  const smIcons  = ICONS - bigIcons;
+  const bigPct   = Math.round(bigger.pop / total * 100);
+  const smPct    = 100 - bigPct;
+
+  // SVG person silhouette path (normalised to 28×36 viewBox)
+  const personPath = `M14,8 a5,5 0 1,0 0.001,0 Z M7,36 L7,22 a7,7 0 0,1 14,0 L21,36 Z`;
+
+  function iconRow(count, color, opacity) {
+    return Array.from({length: count}, () =>
+      `<svg class="pop-person" viewBox="0 0 28 36" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="9" r="6" fill="${color}" opacity="${opacity}"/>
+        <path d="M4,36 L4,24 Q4,16 14,16 Q24,16 24,24 L24,36 Z" fill="${color}" opacity="${opacity}"/>
+      </svg>`
+    ).join('');
+  }
 
   container.innerHTML = `
     <div class="pop-viz">
       <div class="pop-row">
         <div class="pop-country-header">
-          <span style="font-size:1.3rem">${bigger.flag}</span>
-          <span style="font-style:italic">${bigger.name}</span>
+          <span class="pop-pct-big big">${bigPct}%</span>
+          <div>
+            <span style="font-size:1.5rem">${bigger.flag}</span>
+            <span class="pop-country-name">${bigger.name}</span>
+          </div>
         </div>
-        <div class="pop-bar-wrap">
-          <div class="pop-bar-fill big" style="width:${bigPct}%"></div>
-        </div>
-        <div class="pop-bar-val">${fmt(bigger.pop)} people · ${bigPct}% of combined</div>
+        <div class="pop-icons">${iconRow(bigIcons, '#1A7A8A', '0.75')}${iconRow(smIcons, '#1A7A8A', '0.15')}</div>
+        <div class="pop-val">${fmt(bigger.pop)} people</div>
       </div>
       <div class="pop-row">
         <div class="pop-country-header">
-          <span style="font-size:1.3rem">${smaller.flag}</span>
-          <span style="font-style:italic">${smaller.name}</span>
+          <span class="pop-pct-big small">${smPct}%</span>
+          <div>
+            <span style="font-size:1.5rem">${smaller.flag}</span>
+            <span class="pop-country-name">${smaller.name}</span>
+          </div>
         </div>
-        <div class="pop-bar-wrap">
-          <div class="pop-bar-fill small" style="width:${smPct}%"></div>
-        </div>
-        <div class="pop-bar-val">${fmt(smaller.pop)} people · ${smPct}% of combined</div>
+        <div class="pop-icons">${iconRow(smIcons, '#C8732A', '0.75')}${iconRow(bigIcons, '#C8732A', '0.15')}</div>
+        <div class="pop-val">${fmt(smaller.pop)} people</div>
       </div>
     </div>`;
 
